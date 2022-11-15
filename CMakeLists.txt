@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Assignment Information (these are the *only* things you need to change here between assignments)
-set(assignment_name "Open-Flights") # Name of the assignment
+set(assignment_name "mp_stickers") # Name of the assignment
+set(assignment_version 1.2022.12.0) # Version, where minor=semester_year, patch=semester_end_month, tweak=revision
+set(assignment_entrypoints "main" "test_flights") # Entrypoints to run the program
+set(assignment_container "fa22") # Container we are targetting
 
 # Add color support to our messages.
 # See: https://stackoverflow.com/questions/18968979/how-to-get-colorized-output-with-cmake
