@@ -2,6 +2,8 @@
 
 #include <string>
 #include <vector>
+#include <cmath>
+
 std::vector<std::string> GetSubstrs(const std::string& str,
                                                 char delimiter) {
   size_t last = 0;
@@ -17,4 +19,8 @@ std::vector<std::string> GetSubstrs(const std::string& str,
   substrs.push_back(substr);
 
   return substrs;
+}
+
+double distance(double startX, double startY, double endX, double endY) {
+  return math.sqrt((endX - startX)*(endX - startX) - (endY - startY)*(endY-startY));
 }
