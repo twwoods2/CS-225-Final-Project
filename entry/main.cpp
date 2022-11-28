@@ -22,9 +22,14 @@ int main() {
         Airport to_add = Airport(stod(sections.at(6)), stod(sections.at(7)), sections.at(1), sections.at(4)); //stod converts string to double
         cout << to_add.get_lat_long().first << " " << to_add.get_lat_long().second << endl;
     }
-    vector<edge> routes;
+    vector<Edge> routes;
     ifstream ifs_two{"/workspaces/CS 225/CS-225-Final-Project/data/routes_cleaned.csv"};
     if (ifs_two.is_open()) cout << "dub" << endl;
+    
+    for (string line; getline(ifs_two, line); line = "") {
+        string row = line; 
+        Edge to_add;
+    }
     
     std::cout << "end" << std::endl;
     return 0;

@@ -5,10 +5,10 @@
 #include <cmath>
 using namespace std;
 
-class edge {
+class Edge {
     public:
-    edge();
-    edge(string start, string end);
+    Edge();
+    Edge(string start, string end);
     string getStart();
     string getEnd();
     void set_dist(double dist);
