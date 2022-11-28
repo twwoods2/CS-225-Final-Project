@@ -1,4 +1,5 @@
 #include "Airport.h"
+#include "Edge.h"
 #include "Utilities.h"
 #include <iostream>
 #include <vector>
@@ -6,8 +7,8 @@
 using namespace std;
 
 int main() {
-    vector<Airport> airport_node;
-    ifstream ifs{"../CS-225-Final-Project/entry/airports.csv"};
+    vector<Airport> airport_nodes;
+    ifstream ifs{"/workspaces/CS 225/CS-225-Final-Project/entry/airports.csv"};
     if (ifs.is_open()) cout << "dub" << endl;
     for (string line; getline(ifs, line); line = "") {
         
@@ -16,9 +17,14 @@ int main() {
          // we need row[1] (airport_name) && row[4] (airport id) && row[6] (latitude) && row[7] (longitude) 
          // airport_name && airport id && latitude && longitude
 
-        std::cout << line << std::endl;
+        //std::cout << line << std::endl;
         vector<string> sections = GetSubstrs(line, ',');
-        }
+        Airport to_add = Airport(stod(sections.at(6)), stod(sections.at(7)), sections.at(1), sections.at(4)); //stod converts string to double
+        cout << to_add.get_lat_long().first << " " << to_add.get_lat_long().second << endl;
+    }
+    vector<edge> routes;
+    ifstream ifs_two{"/workspaces/CS 225/CS-225-Final-Project/data/routes_cleaned.csv"};
+    if (ifs_two.is_open()) cout << "dub" << endl;
     
     std::cout << "end" << std::endl;
     return 0;

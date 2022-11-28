@@ -17,6 +17,7 @@ class Airport {
     }
     string get_id() {return id_;}
     string get_name() {return airport_name_;}
+    pair<double, double> get_lat_long() {return pair<double,double>(lat_, longit_);}
     //friend std::ostream& operator<<(std::ostream& os, const Airport& node);
 
     private: 

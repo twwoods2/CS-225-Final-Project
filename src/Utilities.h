@@ -22,5 +22,5 @@ std::vector<std::string> GetSubstrs(const std::string& str,
 }
 
 double distance(double startX, double startY, double endX, double endY) {
-  return math.sqrt((endX - startX)*(endX - startX) - (endY - startY)*(endY-startY));
+  return sqrt((endX - startX)*(endX - startX) - (endY - startY)*(endY-startY));
 }
