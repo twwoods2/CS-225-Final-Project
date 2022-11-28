@@ -21,6 +21,7 @@ int main() {
         vector<string> sections = GetSubstrs(line, ',');
         Airport to_add = Airport(stod(sections.at(6)), stod(sections.at(7)), sections.at(1), sections.at(4)); //stod converts string to double
         cout << to_add.get_lat_long().first << " " << to_add.get_lat_long().second << endl;
+        airport_nodes.push_back(to_add);
     }
     vector<Edge> routes;
     ifstream ifs_two{"/workspaces/CS 225/CS-225-Final-Project/data/routes_cleaned.csv"};
@@ -28,7 +29,11 @@ int main() {
     
     for (string line; getline(ifs_two, line); line = "") {
         string row = line; 
-        Edge to_add;
+        
+        vector<string> sections = GetSubstrs(row, ',');
+        Edge to_add(sections.at(0), sections.at(1));
+        cout << "dest " << sections.at(0) << " " << sections.at(1) << endl;
+        routes.push_back(to_add);
     }
     
     std::cout << "end" << std::endl;
