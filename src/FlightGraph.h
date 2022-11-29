@@ -21,11 +21,15 @@ class FlightGraph {
 
     FlightGraph(vector<Airport> airport_nodes, vector<Edge> edge_nodes);
 
+
+
     vector<Airport> GetNeighbors(Airport airport); // gets airport by nodes
     vector<Edge> GetNeighbors(string id); // overloaded function that finds the airport node and finds its neighbors
 
-    void Shortestpath();
+    void Shortestpath(); //to do
 
+    vector<Airport> GetAirports() {return airports_;}
+    vector<Edge> GetEdges() {return routes_;}
 
 
 

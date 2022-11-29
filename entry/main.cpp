@@ -11,6 +11,7 @@ int main() {
     vector<Airport> airport_nodes;
     ifstream ifs{"/workspaces/CS 225/CS-225-Final-Project/entry/airports.csv"};
     if (ifs.is_open()) cout << "dub" << endl;
+    int c = 0;
     for (string line; getline(ifs, line); line = "") {
         
         string row = line; // ex: 1,"Goroka Airport","Goroka","Papua New Guinea","GKA","AYGA",-6.081689834590001,145.391998291,5282,10,"U","Pacific/Port_Moresby","airport","OurAirports"
@@ -20,9 +21,10 @@ int main() {
         vector<string> sections = GetSubstrs(line, ',');
         Airport to_add = Airport(stod(sections.at(6)), stod(sections.at(7)), sections.at(1), sections.at(4)); //stod converts string to double
         airport_nodes.push_back(to_add);
+        c++;
     }
 
-
+    std::cout << "nodes : " << c << endl;
     vector<Edge> routes;
     ifstream ifs_two{"/workspaces/CS 225/CS-225-Final-Project/data/routes_cleaned.csv"};
     if (ifs_two.is_open()) cout << "dub" << endl;
