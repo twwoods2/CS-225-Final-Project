@@ -11,6 +11,7 @@ class Edge {
     Edge(string start, string end);
     string getStart();
     string getEnd();
+    double get_dist() {return route_dist_;}
     void set_dist(double dist);
 
     private:

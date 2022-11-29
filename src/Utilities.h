@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <cmath>
+#include <algorithm>
 
 std::vector<std::string> GetSubstrs(const std::string& str,
                                                 char delimiter) {
@@ -12,6 +13,7 @@ std::vector<std::string> GetSubstrs(const std::string& str,
     if (str.at(i) == delimiter) {
       std::string substr = str.substr(last, i - last);
       last = i + 1;
+      substr.erase(remove(substr.begin(), substr.end(), '"'), substr.end());
       substrs.push_back(substr);
     }
   }
@@ -21,6 +23,3 @@ std::vector<std::string> GetSubstrs(const std::string& str,
   return substrs;
 }
 
-double distance(double startX, double startY, double endX, double endY) {
-  return sqrt((endX - startX)*(endX - startX) - (endY - startY)*(endY-startY));
-}
