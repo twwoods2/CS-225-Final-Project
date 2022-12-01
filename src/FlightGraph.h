@@ -6,7 +6,14 @@
 #include <vector>
 #include <iostream>
 #include <cmath>
-
+#include <limits>
+#include <queue>
+#include <algorithm>
+#include <functional>
+#include <limits>
+#include <set>
+#include <map>
+#include <utility>
 using namespace std;
 
 
@@ -24,9 +31,10 @@ class FlightGraph {
 
 
     vector<Airport> GetNeighbors(Airport airport); // gets airport by nodes
-    vector<Edge> GetNeighbors(string id); // overloaded function that finds the airport node and finds its neighbors
-
-    void Shortestpath(); //to do
+    Airport GetNode(string id);
+    vector<Edge> GetNeighborsEdge(string id); // overloaded function that finds the airport node and finds its neighbors
+    
+    vector<Airport> Dijkstra(Airport start, Airport end);
 
     vector<Airport> GetAirports() {return airports_;}
     vector<Edge> GetEdges() {return routes_;}

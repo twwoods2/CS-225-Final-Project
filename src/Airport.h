@@ -15,9 +15,17 @@ class Airport {
         airport_name_ = "";
         string id_ = "";
     }
-    string get_id() {return id_;}
-    string get_name() {return airport_name_;}
+    string get_id() const {return id_;}
+    string get_name() const {return airport_name_;}
     pair<double, double> get_lat_long() {return pair<double,double>(lat_, longit_);}
+    bool operator<(const Airport other) const {
+        return airport_name_ < other.get_id();
+    }
+    bool operator==(const Airport other) const {
+        if (airport_name_ != other.get_name()) return false;
+        if (id_ != other.get_id()) return false;
+        return true;
+    }
     //friend std::ostream& operator<<(std::ostream& os, const Airport& node);
 
     private: 
