@@ -124,13 +124,15 @@ Airport FlightGraph::GetNode(string id) {
 
 // BREADTH FIRST SEARCH //
 
-map<Airport,Airport> FlightGraph::solve(Airport start) {
+vector<Airport> FlightGraph::solve(Airport start) {
+
+    Airport dummy = Airport(0,0,"dummy","dum",-1);
 
     // create a list of bools to make airports as visited
-    map<Airport,bool> visited;
+    vector<bool> visited;
     //vector<bool> visited;
-    //visited.resize(airports_.size(), false);
-    visited[start] = true;
+    visited.resize(airports_.size(), false);
+    visited[start.get_sourceid()] = true;
 
     // queue for upcoming airports
     queue<Airport> q;
@@ -138,8 +140,8 @@ map<Airport,Airport> FlightGraph::solve(Airport start) {
 
     // what were returning
     // map of airpots <current airport, previous airport>
-    map<Airport,Airport> path;
-    //path.resize(airports_.size(), NULL);
+    vector<Airport> path;
+    path.resize(airports_.size(), dummy);
 
     while(!q.empty())
     {
@@ -154,26 +156,28 @@ map<Airport,Airport> FlightGraph::solve(Airport start) {
         //vector<Airport> neighbors = GetNeighbors(tmp);
         for (auto adjacent: GetNeighbors(tmp))
         {
-            if (!visited[adjacent])
+            if (!visited[adjacent.get_sourceid()])
             {
-                visited[adjacent] = true;
+                visited[adjacent.get_sourceid()] = true;
                 q.push(adjacent);
-                path[adjacent] = tmp;
+                path[adjacent.get_sourceid()] = tmp;
             }
         }
     }
 
     return path;
 }
-map<Airport,Airport> FlightGraph::constrcutpath(Airport start, Airport end, vector<Airport> path) {
+vector<Airport> FlightGraph::constrcutpath(Airport start, Airport end, vector<Airport> path) {
     vector<Airport> toreturn;
     vector<Airport> empty;
 
-    for (Airport tmp = end; tmp != NULL; tmp = path[tmp]) {
+    Airport dummy = Airport(0,0,"dummy","dum",-1);
+
+    for (Airport tmp = end; (tmp == dummy) == false; tmp = path[tmp.get_sourceid()]) {
         toreturn.push_back(tmp);
     }
 
-    reverse(toreturn);
+    std::reverse(toreturn.begin(), toreturn.end());
 
     if (toreturn[0] == start) {
         return toreturn;
@@ -184,9 +188,9 @@ map<Airport,Airport> FlightGraph::constrcutpath(Airport start, Airport end, vect
 
 }
 
-map<Airport,Airport> FlightGraph::bfs(Airport start, Airport end) {
+vector<Airport> FlightGraph::bfs(Airport start, Airport end) {
 
-    path = solve(start);
+    vector<Airport> path = solve(start);
 
     return constrcutpath(start, end, path);
 

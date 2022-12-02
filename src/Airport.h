@@ -15,7 +15,7 @@ class Airport {
         longit_ = 0;
         airport_name_ = "";
         string id_ = "";
-        sourceid_ = 0;
+        sourceid_ = -1;
     }
     int get_sourceid() const {return sourceid_;}
     string get_id() const {return id_;}
