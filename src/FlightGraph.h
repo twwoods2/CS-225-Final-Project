@@ -39,10 +39,19 @@ class FlightGraph {
     vector<Airport> GetAirports() {return airports_;}
     vector<Edge> GetEdges() {return routes_;}
 
+    void graphicalOutput(const std::vector<Vertex> &path);
+
+//Function to convert latitude/longitude values to correct pixel location on worldMap.
+    int convertToPixel(double val, bool lat);
+
+    void plotLineLow(int x0, int y0, int x1, int x2, PNG &png);
+ 
+    void plotLineHigh(int x0, int y0, int x1, int x2, PNG &png);
+
 
 
     private:
-
+    PNG worldMap;
     vector<Airport> airports_;
     vector<Edge> routes_;
     double distance_hlpr(double startX, double startY, double endX, double endY) {

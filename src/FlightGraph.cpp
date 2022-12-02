@@ -7,6 +7,7 @@ using namespace std;
 //set weights
 
 FlightGraph::FlightGraph(vector<Airport> airport_nodes, vector<Edge> edge_nodes) {
+    worldMap.readFromFile("map.png");
     airports_ = airport_nodes;
     routes_ = edge_nodes;
     
@@ -121,4 +122,63 @@ Airport FlightGraph::GetNode(string id) {
         }
     }
     return to_return;
+}
+
+void AirportMap::graphicalOutput(const std::vector<Vertex> &path) {
+  //double vertRatio = 72/25;
+  //double horizRatio = 126/50;
+  PNG output = PNG(worldMap);
+  //int originX = 551;
+  //int originY = 269;
+  
+  Vertex source;
+  Vertex dest;
+  for (unsigned i = 0; i < path.size(); i++) {
+    double sourceLat, sourceLong, destLat, destLong;
+    bool destination = false;
+    source = path[i];
+    sourceLat = locations[source].first;
+    sourceLong = locations[source].second;
+    if (i+1 < path.size()) {
+      dest = path[i+1];
+      destLat = locations[dest].first;
+      destLong = locations[dest].second;
+      destination = true;
+    }
+    int sourceX = convertToPixel(sourceLong, false);
+    int sourceY = convertToPixel(sourceLat, true);
+    
+    
+    
+    for (int x = -1; x < 2; x++) { // Draw 3x3 red square centered on source location
+      for (int y = -1; y < 2; y++) {
+	HSLAPixel pixel = output.getPixel(sourceX + x, sourceY + y);
+	pixel.h = 0;
+      }
+    }
+    if (destination) { // Using Bresenham's algorithm to draw lines
+      int destX = convertToPixel(destLong, false);
+      int destY = convertToPixel(destLat, true);
+      if (std::abs(destY-sourceY) < std::abs(destX-sourceX)) {
+	if ( sourceX > destX) {
+	  plotLineLow(destX, destY, sourceX, sourceY, output);
+	} else {
+	  plotLineLow(sourceX, sourceY, destX, destY, output);
+	}
+      } else {
+	if (sourceY > destY) {
+	  plotLineHigh(destX, destY, sourceX, sourceY, output);
+	} else {
+	  plotLineHigh(sourceX, sourceY, destX, destY, output);
+	}
+      }
+      for (int x = -1; x < 2; x++) { // Draw 3x3 red square centered on dest location
+	for (int y = -1; y < 2; y++) {
+	  HSLAPixel pixel = output.getPixel(destX + x, destY + y);
+	  pixel.h = 0;
+	}
+      }
+    }
+  }
+  output.writeToFile("output_map.png");
 }
