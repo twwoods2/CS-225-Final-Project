@@ -18,7 +18,7 @@ int main() {
          // we need row[1] (airport_name) && row[4] (airport id) && row[6] (latitude) && row[7] (longitude) 
          // airport_name && airport id && latitude && longitude
         vector<string> sections = GetSubstrs(line, ',');
-        Airport to_add = Airport(stod(sections.at(6)), stod(sections.at(7)), sections.at(1), sections.at(4)); //stod converts string to double
+        Airport to_add = Airport(stod(sections.at(6)), stod(sections.at(7)), sections.at(1), sections.at(4), stod(sections.at(0))); //stod converts string to double
         airport_nodes.push_back(to_add);
     }
 

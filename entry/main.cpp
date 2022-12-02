@@ -19,7 +19,7 @@ int main() {
          // we need row[1] (airport_name) && row[4] (airport id) && row[6] (latitude) && row[7] (longitude) 
          // airport_name && airport id && latitude && longitude
         vector<string> sections = GetSubstrs(line, ',');
-        Airport to_add = Airport(stod(sections.at(6)), stod(sections.at(7)), sections.at(1), sections.at(4)); //stod converts string to double
+        Airport to_add = Airport(stod(sections.at(6)), stod(sections.at(7)), sections.at(1), sections.at(4), stod(sections.at(0))); //stod converts string to double
         airport_nodes.push_back(to_add);
         c++;
     }
@@ -49,11 +49,17 @@ int main() {
             routes.push_back(to_add);
          }
         }
+    
     cout << "building graph please wait ..." << endl;
     FlightGraph graph = FlightGraph(airport_nodes, routes);
     //test 
+    /*
     vector<Airport> test = graph.GetNeighbors(airport_nodes.at(3630));
     std::cout << test.size() << " " << test.at(0).get_id() << std::endl;
     std::cout << "end" << std::endl;
     return 0;
+    */
+    Airport start = graph.GetNode("ORD");
+    Airport end = graph.GetNode("BRL");
+    vector<Airport> tester = graph.Dijkstra(start, end);
 }
