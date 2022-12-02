@@ -14,6 +14,7 @@
 #include <set>
 #include <map>
 #include <utility>
+#include <queue>
 using namespace std;
 
 
@@ -38,6 +39,10 @@ class FlightGraph {
 
     vector<Airport> GetAirports() {return airports_;}
     vector<Edge> GetEdges() {return routes_;}
+
+    map<Airport,Airport> solve(Airport start);
+    map<Airport,Airport> constrcutpath(Airport start, Airport end, vector<Airport> path);
+    map<Airport,Airport> bfs(Airport start, Airport end);
 
 
 
