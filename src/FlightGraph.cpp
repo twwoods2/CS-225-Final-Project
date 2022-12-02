@@ -44,7 +44,6 @@ vector<Airport> FlightGraph::GetNeighbors(Airport airport) {
             for (size_t j = 0; j < airports_.size(); j++) {
                 
                 if (neighbor_id == airports_.at(j).get_id()) {
-                    cout << "dub in the function" << endl;
                     search.push_back(airports_.at(j));
                 }
             }
@@ -73,7 +72,7 @@ vector<Airport> FlightGraph::Dijkstra(Airport start, Airport end) {
         dist[airports_.at(i)] = numeric_limits<double>::infinity();
         vector<Airport> neighbors = GetNeighbors(airports_.at(i));
         for (size_t j = 0; j < neighbors.size(); j++) {
-            neighborIDToCurrent[neighbors.at(j).get_id()] = airports_.at(i).get_id();
+            neighborIDToCurrent[neighbors.at(j).get_id()] = airports_.at(i).get_id(); 
         }
     }
     dist[start] = 0;
