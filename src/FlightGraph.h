@@ -32,7 +32,9 @@ class FlightGraph {
 
 
     vector<Airport> GetNeighbors(Airport airport); // gets airport by nodes
+    vector<int> GetNeighborsInt(int airport);
     Airport GetNode(string id);
+    Airport GetNodeInt(int id);
     vector<Edge> GetNeighborsEdge(string id); // overloaded function that finds the airport node and finds its neighbors
     
     vector<Airport> Dijkstra(Airport start, Airport end);
@@ -40,9 +42,9 @@ class FlightGraph {
     vector<Airport> GetAirports() {return airports_;}
     vector<Edge> GetEdges() {return routes_;}
 
-    vector<Airport> solve(Airport start);
-    vector<Airport> constrcutpath(Airport start, Airport end, vector<Airport> path);
-    vector<Airport> bfs(Airport start, Airport end);
+    vector<int> solve(int start);
+    vector<int> constrcutpath(int start, int end, vector<int> path);
+    vector<int> bfs(int start, int end);
 
 
 

@@ -10,7 +10,7 @@ using namespace std;
 
 int main() {
     vector<Airport> airport_nodes;
-    ifstream ifs{"/workspaces/CS 225/CS-225-Final-Project/entry/airports.csv"};
+    ifstream ifs{"/workspaces/cs225env/CS-225-Final-Project/entry/airports.csv"};
     for (string line; getline(ifs, line); line = "") {
         
         string row = line; // ex: 1,"Goroka Airport","Goroka","Papua New Guinea","GKA","AYGA",-6.081689834590001,145.391998291,5282,10,"U","Pacific/Port_Moresby","airport","OurAirports"
@@ -24,7 +24,7 @@ int main() {
 
 
     vector<Edge> routes;
-    ifstream ifs_two{"/workspaces/CS 225/CS-225-Final-Project/data/routes_cleaned.csv"};
+    ifstream ifs_two{"/workspaces/cs225env/CS-225-Final-Project/data/routes_cleaned.csv"};
     
     for (string line; getline(ifs_two, line); line = "") {
         string row = line; 
@@ -88,6 +88,12 @@ int main() {
     }
     
     cout << "tests complete! Passed tests : " << amount_passed << endl;
+    
+
+    // BFS TEST //
+
     return 0;
+
+
     
 }

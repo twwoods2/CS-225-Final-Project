@@ -51,6 +51,25 @@ vector<Airport> FlightGraph::GetNeighbors(Airport airport) {
     }
     return search;
 }
+/*
+vector<int> FlightGraph::GetNeighborsInt(int airport) {
+    vector<int> search;
+    for (size_t i = 0; i < routes_.size(); i++) {
+
+        if (airport == routes_.at(i).getStart()) {
+            string neighbor_id = routes_.at(i).getEnd();
+            for (size_t j = 0; j < airports_.size(); j++) {
+                
+                if (neighbor_id == airports_.at(j).get_id()) {
+                    search.push_back(airports_.at(j).get_sourceid());
+                }
+            }
+        }
+    }
+    return search;
+}
+*/
+
 vector<Edge> FlightGraph::GetNeighborsEdge(string id) { 
     vector<Edge> search;
     for (size_t i = 0; i < routes_.size(); i++) {
@@ -121,32 +140,42 @@ Airport FlightGraph::GetNode(string id) {
     }
     return to_return;
 }
+Airport FlightGraph::GetNodeInt(int id) {
+    Airport to_return;
+    for (Airport temp : airports_) {
+        if (temp.get_sourceid() == id) {
+            to_return = temp;
+            break;
+        }
+    }
+    return to_return;
+}
 
 // BREADTH FIRST SEARCH //
 
-vector<Airport> FlightGraph::solve(Airport start) {
+vector<int> FlightGraph::solve(int start) {
 
-    Airport dummy = Airport(0,0,"dummy","dum",-1);
+    //Airport dummy = Airport(0,0,"dummy","dum",-1);
 
     // create a list of bools to make airports as visited
     vector<bool> visited;
     //vector<bool> visited;
-    visited.resize(airports_.size(), false);
-    visited[start.get_sourceid()] = true;
+    visited.resize(14110, false);
+    visited[start] = true;
 
     // queue for upcoming airports
-    queue<Airport> q;
+    queue<int> q;
     q.push(start);
 
     // what were returning
     // map of airpots <current airport, previous airport>
-    vector<Airport> path;
-    path.resize(airports_.size(), dummy);
+    vector<int> path;
+    path.resize(14110, 0);
 
     while(!q.empty())
     {
         // Dequeue a vertex from queue and print it
-        Airport tmp = q.front();
+        int tmp = q.front();
         // cout << s << " ";
         q.pop();
  
@@ -154,26 +183,28 @@ vector<Airport> FlightGraph::solve(Airport start) {
         // vertex s. If a adjacent has not been visited,
         // then mark it visited and enqueue it
         //vector<Airport> neighbors = GetNeighbors(tmp);
-        for (auto adjacent: GetNeighbors(tmp))
+        Airport beg = GetNodeInt(tmp);
+        for (auto adjacent: GetNeighbors(beg))
         {
-            if (!visited[adjacent.get_sourceid()])
+            int ref = adjacent.get_sourceid();
+            if (!visited[ref])
             {
-                visited[adjacent.get_sourceid()] = true;
-                q.push(adjacent);
-                path[adjacent.get_sourceid()] = tmp;
+                visited[ref] = true;
+                q.push(ref);
+                path[ref] = tmp;
             }
         }
     }
 
     return path;
 }
-vector<Airport> FlightGraph::constrcutpath(Airport start, Airport end, vector<Airport> path) {
-    vector<Airport> toreturn;
-    vector<Airport> empty;
+vector<int> FlightGraph::constrcutpath(int start, int end, vector<int> path) {
+    vector<int> toreturn;
+    vector<int> empty;
 
-    Airport dummy = Airport(0,0,"dummy","dum",-1);
+    //Airport dummy = Airport(0,0,"dummy","dum",-1);
 
-    for (Airport tmp = end; (tmp == dummy) == false; tmp = path[tmp.get_sourceid()]) {
+    for (int tmp = end; tmp != 0; tmp = path[tmp]) {
         toreturn.push_back(tmp);
     }
 
@@ -182,15 +213,16 @@ vector<Airport> FlightGraph::constrcutpath(Airport start, Airport end, vector<Ai
     if (toreturn[0] == start) {
         return toreturn;
     } else {
+        cout << "No path between both points!" << endl;
         return empty;
     }
 
 
 }
 
-vector<Airport> FlightGraph::bfs(Airport start, Airport end) {
+vector<int> FlightGraph::bfs(int start, int end) {
 
-    vector<Airport> path = solve(start);
+    vector<int> path = solve(start);
 
     return constrcutpath(start, end, path);
 
