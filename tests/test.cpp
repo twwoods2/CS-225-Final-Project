@@ -35,7 +35,7 @@ TEST_CASE("bfs Algorithm (1)", "[weight=5]"){
         string row = line; 
         
         vector<string> sections = GetSubstrs(row, ',');
-        Edge to_add(sections.at(0), sections.at(1));
+        Edge to_add(sections.at(2), sections.at(4), stod(sections.at(3)), stod(sections.at(4)));
         //checking the route exists in data
         bool start = false;
         bool end = false;
@@ -97,7 +97,7 @@ TEST_CASE("bfs Algorithm (2)", "[weight=5]"){
         string row = line; 
         
         vector<string> sections = GetSubstrs(row, ',');
-        Edge to_add(sections.at(0), sections.at(1));
+        Edge to_add(sections.at(2), sections.at(4), stod(sections.at(3)), stod(sections.at(4)));
         //checking the route exists in data
         bool start = false;
         bool end = false;
@@ -152,7 +152,7 @@ TEST_CASE("bfs Algorithm (3)", "[weight=5]"){
         string row = line; 
         
         vector<string> sections = GetSubstrs(row, ',');
-        Edge to_add(sections.at(0), sections.at(1));
+        Edge to_add(sections.at(2), sections.at(4), stod(sections.at(3)), stod(sections.at(4)));
         //checking the route exists in data
         bool start = false;
         bool end = false;
@@ -207,7 +207,7 @@ TEST_CASE("bfs Algorithm (World Cup(1))", "[weight=5]"){
         string row = line; 
         
         vector<string> sections = GetSubstrs(row, ',');
-        Edge to_add(sections.at(0), sections.at(1));
+        Edge to_add(sections.at(2), sections.at(4), stod(sections.at(3)), stod(sections.at(4)));
         //checking the route exists in data
         bool start = false;
         bool end = false;
@@ -309,7 +309,7 @@ TEST_CASE("bfs Algorithm (World Cup(2))", "[weight=5]"){
         string row = line; 
         
         vector<string> sections = GetSubstrs(row, ',');
-        Edge to_add(sections.at(0), sections.at(1));
+        Edge to_add(sections.at(2), sections.at(4), stod(sections.at(3)), stod(sections.at(4)));
         //checking the route exists in data
         bool start = false;
         bool end = false;
@@ -389,8 +389,8 @@ TEST_CASE("bfs Algorithm (World Cup(2))", "[weight=5]"){
     vector<int> answer2 = {3484,2564,11051};
     vector<int> answer3 = {2334,2279,11051};
     vector<int> answer4 = {1638,507,11051};
-    REQUIRE (test_bfs1 == answer1);
-    REQUIRE (test_bfs2 == answer2);
-    REQUIRE (test_bfs3 == answer3);
-    REQUIRE (test_bfs4 == answer4);
+    REQUIRE (sfo_doha == answer1);
+    REQUIRE (lax_doha == answer2);
+    REQUIRE (itm_doha == answer3);
+    REQUIRE (lis_doha == answer4);
 }

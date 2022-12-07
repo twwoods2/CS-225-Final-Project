@@ -26,14 +26,14 @@ int main() {
 
     std::cout << "nodes : " << c << endl;
     vector<Edge> routes;
-    ifstream ifs_two{"/workspaces/CS 225/CS-225-Final-Project/data/routes_cleaned.csv"};
+    ifstream ifs_two{"/workspaces/CS 225/CS-225-Final-Project/data/routes.csv"};
     if (ifs_two.is_open()) cout << "dub" << endl;
     
     for (string line; getline(ifs_two, line); line = "") {
         string row = line; 
         
         vector<string> sections = GetSubstrs(row, ',');
-        Edge to_add(sections.at(0), sections.at(1));
+        Edge to_add(sections.at(2), sections.at(4), stod(sections.at(3)), stod(sections.at(4)));
         //checking the route exists in data
         bool start = false;
         bool end = false;
@@ -59,7 +59,4 @@ int main() {
     std::cout << "end" << std::endl;
     return 0;
     */
-    Airport start = graph.GetNode("ORD");
-    Airport end = graph.GetNode("BRL");
-    vector<Airport> tester = graph.Dijkstra(start, end);
 }

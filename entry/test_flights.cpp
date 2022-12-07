@@ -10,7 +10,7 @@ using namespace std;
 
 int main() {
     vector<Airport> airport_nodes;
-    ifstream ifs{"/workspaces/cs225env/CS-225-Final-Project/entry/airports.csv"};
+    ifstream ifs{"/workspaces/CS 225/CS-225-Final-Project/entry/airports.csv"};
     for (string line; getline(ifs, line); line = "") {
         
         string row = line; // ex: 1,"Goroka Airport","Goroka","Papua New Guinea","GKA","AYGA",-6.081689834590001,145.391998291,5282,10,"U","Pacific/Port_Moresby","airport","OurAirports"
@@ -24,13 +24,13 @@ int main() {
 
 
     vector<Edge> routes;
-    ifstream ifs_two{"/workspaces/cs225env/CS-225-Final-Project/data/routes_cleaned.csv"};
+    ifstream ifs_two{"/workspaces/CS 225/CS-225-Final-Project/data/routes.csv"};
     
     for (string line; getline(ifs_two, line); line = "") {
         string row = line; 
         
         vector<string> sections = GetSubstrs(row, ',');
-        Edge to_add(sections.at(0), sections.at(1));
+        Edge to_add(sections.at(2), sections.at(4), stod(sections.at(3)), stod(sections.at(4)));
         //checking the route exists in data
         bool start = false;
         bool end = false;
@@ -70,7 +70,7 @@ int main() {
     // test to check the correct amount of neighbors of nodes
 
     vector<Airport> test = graph.GetNeighbors(airport_nodes.at(3630)); //checking neighbors of O'hare international airport (expected amount of neighbors: 558)
-
+    vector<Airport> to_compare = graph.GetNeighbors(3830);
     if (test.size() == 558) {
         cout << "correct amount of neighbors of node" << endl;
         amount_passed++;
@@ -89,7 +89,7 @@ int main() {
     
     cout << "tests complete! Passed tests : " << amount_passed << endl;
     
-
+    if (test.size() == to_compare.size()) cout << "Let's fucking go" << endl;
     // BFS TEST //
 
     return 0;

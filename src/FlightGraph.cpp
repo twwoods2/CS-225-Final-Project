@@ -32,6 +32,38 @@ FlightGraph::FlightGraph(vector<Airport> airport_nodes, vector<Edge> edge_nodes)
         double weight = distance_hlpr(begin.get_lat_long().second, begin.get_lat_long().first, end.get_lat_long().second, end.get_lat_long().first);
         routes_.at(i).set_dist(weight);
     }
+    //making neighbors using unordered_map<int, vector<Airports> neighbors
+    unordered_map<int, vector<Airport>> neighbors;
+    for (size_t i = 0; i < airports_.size(); i++) {
+
+        int airport_id = airports_.at(i).get_sourceid();
+        vector<Airport> temp_n;
+        for (size_t j = 0; j < routes_.size(); j++) {
+
+            if (airports_.at(i).get_id() == routes_.at(j).getStart()) {
+
+                string to_find = routes_.at(j).getEnd();
+                for (Airport search : airports_) {
+                    
+                    if (search.get_id() == to_find) {
+                        
+                        temp_n.push_back(search);
+
+                    }
+
+                }
+
+            }
+            
+
+        }
+        if (!temp_n.empty()) {
+
+            neighbors.insert(make_pair(airport_id, temp_n));
+
+        }
+    }
+    neighbors_ = neighbors;
     cout << "done building graph ..." << endl;
 }
 
@@ -51,24 +83,6 @@ vector<Airport> FlightGraph::GetNeighbors(Airport airport) {
     }
     return search;
 }
-/*
-vector<int> FlightGraph::GetNeighborsInt(int airport) {
-    vector<int> search;
-    for (size_t i = 0; i < routes_.size(); i++) {
-
-        if (airport == routes_.at(i).getStart()) {
-            string neighbor_id = routes_.at(i).getEnd();
-            for (size_t j = 0; j < airports_.size(); j++) {
-                
-                if (neighbor_id == airports_.at(j).get_id()) {
-                    search.push_back(airports_.at(j).get_sourceid());
-                }
-            }
-        }
-    }
-    return search;
-}
-*/
 
 vector<Edge> FlightGraph::GetNeighborsEdge(string id) { 
     vector<Edge> search;
