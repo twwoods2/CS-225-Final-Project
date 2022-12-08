@@ -38,11 +38,13 @@ class FlightGraph {
     Airport GetNodeInt(int id);
     vector<Edge> GetNeighborsEdge(string id); // overloaded function that finds the airport node and finds its neighbors
     
-    vector<int> Dijkstra(int start, int end);
+    pair<vector<int>,double> Dijkstra(int start, int end);
+    //pair<vector<int>, double> shortestPath(vector<int> path, double distance);
     
 
     vector<Airport> GetAirports() {return airports_;}
     vector<Edge> GetEdges() {return routes_;}
+    
 
     vector<int> solve(int start);
     vector<int> constrcutpath(int start, int end, vector<int> path);
@@ -57,7 +59,7 @@ class FlightGraph {
     unordered_map<int, vector<Airport>> neighbors_;
     
     double distance_hlpr(double startX, double startY, double endX, double endY) {
-        double square = (endX - startX)*(endX - startX) - (endY - startY)*(endY-startY);
+        double square = (endX - startX)*(endX - startX) + (endY - startY)*(endY-startY);
         if (square < 0) {
             return - sqrt(std::abs(square));
         } else {

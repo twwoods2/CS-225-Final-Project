@@ -67,6 +67,8 @@ FlightGraph::FlightGraph(vector<Airport> airport_nodes, vector<Edge> edge_nodes)
     cout << "done building graph ..." << endl;
 }
 
+// ADJACENCY LIST // 
+
 vector<Airport> FlightGraph::GetNeighbors(Airport airport) {
     vector<Airport> search;
     for (size_t i = 0; i < routes_.size(); i++) {
@@ -93,7 +95,12 @@ vector<Edge> FlightGraph::GetNeighborsEdge(string id) {
     }
     return search;
 }
-vector<int> FlightGraph::Dijkstra(int start, int end) {
+
+// DJIKSTRA //
+
+pair<vector<int>,double> FlightGraph::Dijkstra(int start, int end) {
+    // check that its a valid airport?
+
     // init distance vector
     vector<double> dist;
     dist.resize(14110, INT_MAX);
@@ -141,56 +148,50 @@ vector<int> FlightGraph::Dijkstra(int start, int end) {
                 // check that the start and end of the current edge match the integers
                 if (edge_dist.at(j).getStartId() == idx && edge_dist.at(j).getEndId() == tmp_airport) {
                     // if the start and end work, pull the distance value
-                    // this distance represents the distance from current index to tmp_airport
+                    // this distance represents the distance from current index to tmp_airport or the route
                     edge_cost = edge_dist.at(j).get_dist();
                 }
             }
+            // skipping over aiports we have already visited
             if (visited[GetNeighbors(idx).at(i).get_sourceid()] == true) {
                 continue;
             } else {
                 double newDist = dist[idx] + edge_cost;
                 // checking if the newDist is smaller than current dist
-                dist[tmp_airport] = min(newDist, dist[tmp_airport]);
-                pq.push(make_pair(tmp_airport,newDist));
-                prev[tmp_airport] = idx;
+                if (newDist < dist[tmp_airport]) {
+                    dist[tmp_airport] = newDist;
+                    pq.push(make_pair(tmp_airport,newDist));
+                    prev[tmp_airport] = idx;
+                }
+            }
+            // checking if we have reached the end node yet
+            if (tmp_airport == end) {
+                break;
             }
         }
     }
 
     // building the path
     vector<int> path;
+    double total_dist = 0;
+    // checking that the path exists (if it doesnt than destination will be infinite)
     if (dist[end] == INT_MAX) {
         cout << "There is no path to the airports!" << endl;
-        return path;
+        return make_pair(path,total_dist);
     }
+    // calculating the total distance;
     for (int k = end; k != 0; k = prev[k]) {
         path.push_back(k);
+        total_dist += dist[k];
     }
 
     std::reverse(path.begin(), path.end());
 
-    return path;
+    return make_pair(path, total_dist);
 
 }
-/*
 
-initialize distances  // initialize tentative distance value
-  initialize previous   // initialize a map that maps current node -> its previous node
-  initialize priority_queue   // initialize the priority queue
-  initialize visited
-
-  while the top of priority_queue is not destination:
-      get the current_node from priority_queue
-      for neighbor in current_node's neighbors and not in visited:
-          if update its neighbor's distances:
-              previous[neighbor] = current_node
-      save current_node into visited
-
-  extract path from previous
-  return path and distance
-  */
-
-
+// NODE CONVERSIONS //
 
 Airport FlightGraph::GetNode(string id) {
     Airport to_return;
