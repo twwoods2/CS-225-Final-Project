@@ -5,6 +5,8 @@ Edge::Edge() {
     start_ = "";
     end_ = "";
     route_ = pair<string,string>(start_, end_);
+    start_id = -1;
+    end_id = -1;
 }
 Edge::Edge(string start, string end, int source_id, int dest_id) {
     start_ = start;

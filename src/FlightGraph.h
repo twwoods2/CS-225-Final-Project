@@ -16,6 +16,7 @@
 #include <queue>
 #include <iterator>
 #include <unordered_map>
+#include <bits/stdc++.h>
 using namespace std;
 
 
@@ -37,7 +38,8 @@ class FlightGraph {
     Airport GetNodeInt(int id);
     vector<Edge> GetNeighborsEdge(string id); // overloaded function that finds the airport node and finds its neighbors
     
-    vector<Airport> Dijkstra(Airport start, Airport end);
+    vector<int> Dijkstra(int start, int end);
+    
 
     vector<Airport> GetAirports() {return airports_;}
     vector<Edge> GetEdges() {return routes_;}
