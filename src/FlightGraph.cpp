@@ -113,12 +113,13 @@ vector<int> FlightGraph::Dijkstra(int start, int end) {
     visited[start] = true;
 
     while (!pq.empty()) {
-        pair<int,double> tmp = pq.pop();
-        int idx = tmp.first();
-        double cur_dist = tmp.second();
+        pair<int,double> tmp = pq.top();
+        pq.pop();
+        int idx = tmp.first;
+        double cur_dist = tmp.second;
 
         // mark the new node as visisted
-        visisted[idx] = true;
+        visited[idx] = true;
 
         //obtain edges from current index and to get distances
         Airport curr_airport = GetNodeInt(idx);
@@ -132,18 +133,19 @@ vector<int> FlightGraph::Dijkstra(int start, int end) {
 
         // loop over neighbors of current node and skip visited nodes
         for (size_t i = 0; i < GetNeighbors(curr_airport).size(); i++) {
-            int tmp_airport = GetNeighbors(curr_airport).at(i);
+            int tmp_airport = GetNeighbors(curr_airport).at(i).get_sourceid();
+            double edge_cost;
             // obtain dist to node from current idx
             // loop through all the edges in the neighboring edges 
             for (size_t j = 0; j < edge_dist.size(); j++) {
                 // check that the start and end of the current edge match the integers
-                if (edge_dist.at(j).getStart() == idx && edge_dist.at(j).getEnd() == tmp_airport) {
+                if (edge_dist.at(j).getStartId() == idx && edge_dist.at(j).getEndId() == tmp_airport) {
                     // if the start and end work, pull the distance value
                     // this distance represents the distance from current index to tmp_airport
-                    double edge_cost = edge_dist.at(j).get_dist();
+                    edge_cost = edge_dist.at(j).get_dist();
                 }
             }
-            if (visited[GetNeighbors(idx).at(i)] == true) {
+            if (visited[GetNeighbors(idx).at(i).get_sourceid()] == true) {
                 continue;
             } else {
                 double newDist = dist[idx] + edge_cost;

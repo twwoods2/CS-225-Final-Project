@@ -390,3 +390,43 @@ TEST_CASE("bfs Algorithm (World Cup(2))", "[weight=5]"){
     REQUIRE (itm_doha == answer3);
     REQUIRE (lis_doha == answer4);
 }
+
+TEST_CASE("Dijstrka (1), [weight=5]") {
+    vector<Airport> airport_nodes;
+    ifstream ifs{"/workspaces/cs225env/CS-225-Final-Project/entry/airports.csv"};
+    for (string line; getline(ifs, line); line = "") {
+        
+        string row = line;
+        vector<string> sections = GetSubstrs(line, ',');
+        Airport to_add = Airport(stod(sections.at(6)), stod(sections.at(7)), sections.at(1), sections.at(4), stod(sections.at(0))); //stod converts string to double
+        airport_nodes.push_back(to_add);
+    }
+
+
+    vector<Edge> routes;
+    ifstream ifs_two{"/workspaces/cs225env/CS-225-Final-Project/data/routes_cleaned.csv"};
+    
+    for (string line; getline(ifs_two, line); line = "") {
+        string row = line; 
+        
+        vector<string> sections = GetSubstrs(row, ',');
+        Edge to_add(sections.at(2), sections.at(4), stod(sections.at(3)), stod(sections.at(4)));
+        //checking the route exists in data
+        bool start = false;
+        bool end = false;
+        for (size_t i = 0; i < airport_nodes.size(); i++) {
+            if (airport_nodes.at(i).get_id() == sections.at(0)) {
+                start = true;
+            } else if (airport_nodes.at(i).get_id() == sections.at(1)) {
+                end = true;
+            }
+        }
+         if (start && end) {
+            routes.push_back(to_add);
+         }
+        }
+
+    FlightGraph graph = FlightGraph(airport_nodes, routes);
+
+    
+}
