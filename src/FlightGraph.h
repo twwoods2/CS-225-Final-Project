@@ -44,16 +44,13 @@ class FlightGraph {
 
     vector<Airport> GetAirports() {return airports_;}
     vector<Edge> GetEdges() {return routes_;}
-    
 
     vector<int> solve(int start);
     vector<int> constrcutpath(int start, int end, vector<int> path);
     vector<int> bfs(int start, int end);
-    vector<Airport> GetNeighbors(int source_id) {return neighbors_[source_id];}
 
 
     private:
-
     vector<Airport> airports_;
     vector<Edge> routes_;
     unordered_map<int, vector<Airport>> neighbors_;

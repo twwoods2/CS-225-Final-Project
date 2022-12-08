@@ -153,7 +153,7 @@ pair<vector<int>,double> FlightGraph::Dijkstra(int start, int end) {
                 }
             }
             // skipping over aiports we have already visited
-            if (visited[GetNeighbors(idx).at(i).get_sourceid()] == true) {
+            if (visited[GetNeighbors(curr_airport).at(i).get_sourceid()] == true) {
                 continue;
             } else {
                 double newDist = dist[idx] + edge_cost;

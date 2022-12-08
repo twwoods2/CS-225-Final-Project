@@ -69,6 +69,8 @@ int main() {
 
     // test to check the correct amount of neighbors of nodes
 
+    /*
+
     vector<Airport> test = graph.GetNeighbors(airport_nodes.at(3630)); //checking neighbors of O'hare international airport (expected amount of neighbors: 558)
     vector<Airport> to_compare = graph.GetNeighbors(3830);
     if (test.size() == 558) {
@@ -91,6 +93,8 @@ int main() {
     
     if (test.size() == to_compare.size()) cout << "Let's fucking go" << endl;
     // BFS TEST //
+
+    */
 
     return 0;
 
