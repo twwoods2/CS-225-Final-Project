@@ -131,7 +131,7 @@ TEST_CASE("bfs Algorithm (2)", "[weight=5]"){
 
 TEST_CASE("bfs Algorithm (3)", "[weight=5]"){
     vector<Airport> airport_nodes;
-    ifstream ifs{"/workspaces/cs225env/CS-225-Final-Project/data/condensed_airport.csv"};
+    ifstream ifs{"/workspaces/CS 225/CS-225-Final-Project/data/condensed_airport.csv"};
     for (string line; getline(ifs, line); line = "") {
         
         string row = line;
@@ -142,28 +142,37 @@ TEST_CASE("bfs Algorithm (3)", "[weight=5]"){
 
 
     vector<Edge> routes;
-    ifstream ifs_two{"/workspaces/cs225env/CS-225-Final-Project/data/routes_cleaned.csv"};
+    ifstream ifs_two{"/workspaces/CS 225/CS-225-Final-Project/data/routes.csv"};
     
     for (string line; getline(ifs_two, line); line = "") {
         string row = line; 
         
         vector<string> sections = GetSubstrs(row, ',');
-        Edge to_add(sections.at(2), sections.at(4), stod(sections.at(3)), stod(sections.at(4)));
-        //checking the route exists in data
-        bool start = false;
-        bool end = false;
-        for (size_t i = 0; i < airport_nodes.size(); i++) {
-            if (airport_nodes.at(i).get_id() == sections.at(0)) {
+        std::cout << "here" << std::endl;
+
+        if (sections.at(3) != "\\N" && sections.at(5) != "\\N") {
+            cout << "ching bou ja" << endl;
+            Edge to_add(sections.at(2), sections.at(4), stoi(sections.at(3)), stoi(sections.at(5)));
+            std::cout << "solved" << endl;
+            //checking the route exists in data
+            bool start = false;
+            bool end = false;
+            for (size_t i = 0; i < airport_nodes.size(); i++) {
+                if (airport_nodes.at(i).get_id() == sections.at(2)) {
                 start = true;
-            } else if (airport_nodes.at(i).get_id() == sections.at(1)) {
+                } else if (airport_nodes.at(i).get_id() == sections.at(4)) {
                 end = true;
             }
-        }
-         if (start && end) {
-            routes.push_back(to_add);
+            }
+            if (start && end) {
+                routes.push_back(to_add);
+            }
          }
         }
 
+
+        std::cout << "broski" << std::endl;
+    cout << airport_nodes.size() << " " << routes.size() << endl;
     FlightGraph graph = FlightGraph(airport_nodes, routes);
 
     cout << "Route from SFO -> CMI" << endl;
