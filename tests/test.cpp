@@ -12,10 +12,6 @@ using namespace std;
 
 //your code here
 
-TEST_CASE("Free Points", "[weight=5]"){
-    REQUIRE( 1 == 1);
-}
-
 TEST_CASE("bfs Algorithm (1)", "[weight=5]"){
     vector<Airport> airport_nodes;
     ifstream ifs{"/workspaces/cs225env/CS-225-Final-Project/data/condensed_airport.csv"};

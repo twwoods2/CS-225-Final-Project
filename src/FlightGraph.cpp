@@ -79,57 +79,103 @@ vector<Edge> FlightGraph::GetNeighborsEdge(string id) {
     }
     return search;
 }
-vector<Airport> FlightGraph::Dijkstra(Airport start, Airport end) {
-    priority_queue<pair<double, Airport>> p_queue;
-    set<Airport> visited;
-    pair<double, Airport> begin = pair<double, Airport>(0, start);
-    p_queue.push(begin);
-    map<Airport,double> dist;
+vector<int> FlightGraph::Dijkstra(int start, int end) {
+    // init distance vector
+    vector<double> dist;
+    dist.resize(14110, INT_MAX);
+    dist.at(start) = 0;
 
-    map<string, string> neighborIDToCurrent;
-    for (size_t i = 0; i < airports_.size(); i++) {
-        dist[airports_.at(i)] = numeric_limits<double>::infinity();
-        vector<Airport> neighbors = GetNeighbors(airports_.at(i));
-        for (size_t j = 0; j < neighbors.size(); j++) {
-            neighborIDToCurrent[neighbors.at(j).get_id()] = airports_.at(i).get_id(); 
-        }
-    }
-    dist[start] = 0;
-    while (!p_queue.empty() && p_queue.top().second.get_id() != end.get_id()) {
-        Airport current = p_queue.top().second;
-        double w = p_queue.top().first;
+    // init previous vector
+    vector<int> prev;
+    prev.resize(14110, 0);
 
-        vector<Edge> neighbor_edge = GetNeighborsEdge(current.get_id());
-        for (size_t i = 0; i < neighbor_edge.size(); i++) {
-            Edge edge = neighbor_edge.at(i);
-            Airport neighbor_node = GetNode(edge.getEnd());
-            if (neighbor_node.get_id() == "") continue;
+    // init priority queue
+    priority_queue<pair<int,double>> pq; // pair<airport(index) , distance>
+    pq.push(make_pair(start,0.0));
 
-            if (visited.find(neighbor_node) == visited.end()) {
-                if (abs(w) + edge.get_dist() < dist[neighbor_node]) {
-                    dist[neighbor_node] = abs(w) + edge.get_dist();
+    // initialize visited check vector
+    vector<bool> visited;
+    visited.resize(14110, false);
+    visited[start] = true;
+
+    while (!pq.empty()) {
+        pair<int,double> tmp = pq.pop();
+        int idx = tmp.first();
+        double cur_dist = tmp.second();
+
+        // mark the new node as visisted
+        visisted[idx] = true;
+
+        //obtain edges from current index and to get distances
+        Airport curr_airport = GetNodeInt(idx);
+        string curr_string = curr_airport.get_id();
+        vector<Edge> edge_dist = GetNeighborsEdge(curr_string);
+
+        // overcoming stale pushes
+
+        if (dist[idx] < cur_dist) { continue; }
+
+
+        // loop over neighbors of current node and skip visited nodes
+        for (size_t i = 0; i < GetNeighbors(curr_airport).size(); i++) {
+            int tmp_airport = GetNeighbors(curr_airport).at(i);
+            // obtain dist to node from current idx
+            // loop through all the edges in the neighboring edges 
+            for (size_t j = 0; j < edge_dist.size(); j++) {
+                // check that the start and end of the current edge match the integers
+                if (edge_dist.at(j).getStart() == idx && edge_dist.at(j).getEnd() == tmp_airport) {
+                    // if the start and end work, pull the distance value
+                    // this distance represents the distance from current index to tmp_airport
+                    double edge_cost = edge_dist.at(j).get_dist();
                 }
-                p_queue.push(make_pair(-1.0 * dist[neighbor_node], neighbor_node));
-                neighborIDToCurrent[neighbor_node.get_id()] = current.get_id();
+            }
+            if (visited[GetNeighbors(idx).at(i)] == true) {
+                continue;
+            } else {
+                double newDist = dist[idx] + edge_cost;
+                // checking if the newDist is smaller than current dist
+                dist[tmp_airport] = min(newDist, dist[tmp_airport]);
+                pq.push(make_pair(tmp_airport,newDist));
+                prev[tmp_airport] = idx;
             }
         }
-        visited.insert(current);
-        p_queue.pop();
-
     }
-    vector<Airport> shortest;
-    Airport destination = end;
-    
-    while (neighborIDToCurrent[destination.get_id()] != start.get_id()) {
-        shortest.push_back(destination);
-        destination = GetNode(neighborIDToCurrent[destination.get_id()]);
-    }
-    shortest.push_back(start);
-    
 
-    
-    return shortest;
+    // building the path
+    vector<int> path;
+    if (dist[end] == INT_MAX) {
+        cout << "There is no path to the airports!" << endl;
+        return path;
+    }
+    for (int k = end; k != 0; k = prev[k]) {
+        path.push_back(k);
+    }
+
+    std::reverse(path.begin(), path.end());
+
+    return path;
+
 }
+/*
+
+initialize distances  // initialize tentative distance value
+  initialize previous   // initialize a map that maps current node -> its previous node
+  initialize priority_queue   // initialize the priority queue
+  initialize visited
+
+  while the top of priority_queue is not destination:
+      get the current_node from priority_queue
+      for neighbor in current_node's neighbors and not in visited:
+          if update its neighbor's distances:
+              previous[neighbor] = current_node
+      save current_node into visited
+
+  extract path from previous
+  return path and distance
+  */
+
+
+
 Airport FlightGraph::GetNode(string id) {
     Airport to_return;
     for (Airport temp : airports_) {
