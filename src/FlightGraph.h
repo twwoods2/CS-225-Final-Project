@@ -15,6 +15,7 @@
 #include <utility>
 #include <queue>
 #include <iterator>
+#include <unordered_map>
 using namespace std;
 
 
@@ -32,7 +33,6 @@ class FlightGraph {
 
 
     vector<Airport> GetNeighbors(Airport airport); // gets airport by nodes
-    vector<int> GetNeighborsInt(int airport);
     Airport GetNode(string id);
     Airport GetNodeInt(int id);
     vector<Edge> GetNeighborsEdge(string id); // overloaded function that finds the airport node and finds its neighbors
@@ -46,13 +46,15 @@ class FlightGraph {
     vector<int> solve(int start);
     vector<int> constrcutpath(int start, int end, vector<int> path);
     vector<int> bfs(int start, int end);
-
+    vector<Airport> GetNeighbors(int source_id) {return neighbors_[source_id];}
 
 
     private:
 
     vector<Airport> airports_;
     vector<Edge> routes_;
+    unordered_map<int, vector<Airport>> neighbors_;
+    
     double distance_hlpr(double startX, double startY, double endX, double endY) {
         double square = (endX - startX)*(endX - startX) - (endY - startY)*(endY-startY);
         if (square < 0) {
