@@ -484,7 +484,7 @@ TEST_CASE("Dijkstra (1)", "[weight=5]") {
 
 TEST_CASE("Dijkstra (2)", "[weight=5]") {
     vector<Airport> airport_nodes;
-    ifstream ifs{"/workspaces/cs225env/CS-225-Final-Project/data/condensed_airport.csv"};
+    ifstream ifs{"../data/condensed_airport.csv"};
     for (string line; getline(ifs, line); line = "") {
         
         string row = line;
@@ -495,7 +495,7 @@ TEST_CASE("Dijkstra (2)", "[weight=5]") {
 
 
     vector<Edge> routes;
-    ifstream ifs_two{"/workspaces/cs225env/CS-225-Final-Project/data/routes.csv"};
+    ifstream ifs_two{"../data/routes.csv"};
     
     for (string line; getline(ifs_two, line); line = "") {
         string row = line; 
@@ -560,7 +560,7 @@ TEST_CASE("BFS / Dijkstra (1)", "[weight=5]") {
 
 
     vector<Edge> routes;
-    ifstream ifs_two{"/workspaces/cs225env/CS-225-Final-Project/data/routes.csv"};
+    ifstream ifs_two{"../data/routes.csv"};
     
     for (string line; getline(ifs_two, line); line = "") {
         string row = line; 
@@ -633,7 +633,7 @@ TEST_CASE("BFS / Dijkstra (1)", "[weight=5]") {
 
 TEST_CASE("BFS / Dijkstra (2)", "[weight=5]") {
     vector<Airport> airport_nodes;
-    ifstream ifs{"/workspaces/cs225env/CS-225-Final-Project/data/condensed_airport.csv"};
+    ifstream ifs{"../entry/airports.csv"};
     for (string line; getline(ifs, line); line = "") {
         
         string row = line;
@@ -644,7 +644,7 @@ TEST_CASE("BFS / Dijkstra (2)", "[weight=5]") {
 
 
     vector<Edge> routes;
-    ifstream ifs_two{"/workspaces/cs225env/CS-225-Final-Project/data/routes.csv"};
+    ifstream ifs_two{"../data/routes.csv"};
     
     for (string line; getline(ifs_two, line); line = "") {
         string row = line; 
@@ -741,8 +741,8 @@ TEST_CASE("BFS / Dijkstra (2)", "[weight=5]") {
     */
 
     // DJIKSTRA // 
-    cout << "Route from SFO-> Doha (Dijkstra)" << endl;
-     pair<vector<int>,double> test_djk1 = graph.Dijkstra(3469, 11051);
+    cout << "Route from SFO -> ORD (Dijkstra)" << endl;
+     pair<vector<int>,double> test_djk1 = graph.Dijkstra(3469, 3830);
      vector<int> path1 = test_djk1.first;
      double distance1 = test_djk1.second;
 

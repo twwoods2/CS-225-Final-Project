@@ -111,7 +111,7 @@ pair<vector<int>,double> FlightGraph::Dijkstra(int start, int end) {
     prev.resize(14110, 0);
 
     // init priority queue
-    priority_queue<pair<int,double>> pq; // pair<airport(index) , distance>
+    priority_queue<pair<int, double>, vector<pair<int, double>>, Compare> pq; // pair<airport(index) , distance>
     pq.push(make_pair(start,0.0));
 
     // initialize visited check vector
@@ -119,7 +119,8 @@ pair<vector<int>,double> FlightGraph::Dijkstra(int start, int end) {
     visited.resize(14110, false);
     visited[start] = true;
 
-    while (!pq.empty()) {
+    bool flag = false;
+    while (!pq.empty() && !flag) {
         pair<int,double> tmp = pq.top();
         pq.pop();
         int idx = tmp.first;
@@ -166,6 +167,7 @@ pair<vector<int>,double> FlightGraph::Dijkstra(int start, int end) {
             }
             // checking if we have reached the end node yet
             if (tmp_airport == end) {
+                flag = true;
                 break;
             }
         }

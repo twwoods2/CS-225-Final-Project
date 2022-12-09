@@ -63,5 +63,10 @@ class FlightGraph {
             return sqrt(std::abs(square));
         }
     }
-    
+    class Compare {
+        public:
+        bool operator()(pair<int, double> p1, pair<int, double> p2) {
+            return p1.second > p2.second;
+        }
+    };
 };
