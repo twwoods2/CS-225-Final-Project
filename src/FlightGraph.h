@@ -54,14 +54,31 @@ class FlightGraph {
     vector<Airport> airports_;
     vector<Edge> routes_;
     unordered_map<int, vector<Airport>> neighbors_;
-    
+    double toRadians(const double deg) {
+        double one_deg = (M_PI) / 180;
+        return (one_deg * deg);
+    }
     double distance_hlpr(double startX, double startY, double endX, double endY) {
-        double square = (endX - startX)*(endX - startX) + (endY - startY)*(endY-startY);
-        if (square < 0) {
-            return - sqrt(std::abs(square));
-        } else {
-            return sqrt(std::abs(square));
-        }
+        startY = toRadians(startY);
+        startX = toRadians(startX);
+
+        endY = toRadians(endY);
+        endX = toRadians(endX);
+
+        double dlong = endX - startX;
+        double dlat = endY - startY;
+
+        double answer = pow(sin(dlat / 2), 2) + cos(startY) * cos(endY) * pow(sin(dlong/2), 2);
+        answer = 2 * asin(sqrt(answer));
+
+        
+        double R = 6371;
+
+        answer = answer * R;
+
+        return answer;
+        
+
     }
     class Compare {
         public:
