@@ -8,7 +8,7 @@
 
 #include <string>
 using std::string;
-
+#include "../lodepng/lodepng.h"
 #include "HSLAPixel.h"
 
 namespace cs225 {

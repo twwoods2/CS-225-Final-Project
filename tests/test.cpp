@@ -549,7 +549,7 @@ TEST_CASE("Dijkstra (2)", "[weight=5]") {
 
 TEST_CASE("BFS / Dijkstra (1)", "[weight=5]") {
     vector<Airport> airport_nodes;
-    ifstream ifs{"/workspaces/cs225env/CS-225-Final-Project/data/condensed_airport.csv"};
+    ifstream ifs{"../data/condensed_airport.csv"};
     for (string line; getline(ifs, line); line = "") {
         
         string row = line;
@@ -624,6 +624,22 @@ TEST_CASE("BFS / Dijkstra (1)", "[weight=5]") {
         if (i == path.size() - 1) {
             cout << " Destination Reached!" << endl;
             cout << "Flight Distance: " << distance << endl;
+        }
+    }
+    cout << "Route from SFO -> ORD (Dijkstra)" << endl;
+     pair<vector<int>,double> test_djk1 = graph.Dijkstra(3469, 3830);
+     vector<int> path1 = test_djk1.first;
+     double distance1 = test_djk1.second;
+
+    for (size_t i = 0; i < path1.size(); i++) {
+        if (i == 0) {
+            cout << "Starting Aiport: -> ";
+        }
+        cout << path1.at(i) << " -> ";
+
+        if (i == path1.size() - 1) {
+            cout << " Destination Reached!" << endl;
+            cout << "Flight Distance: " << distance1 << endl;
         }
     }
 

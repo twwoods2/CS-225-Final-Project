@@ -52,11 +52,5 @@ int main() {
     
     cout << "building graph please wait ..." << endl;
     FlightGraph graph = FlightGraph(airport_nodes, routes);
-    //test 
-    /*
-    vector<Airport> test = graph.GetNeighbors(airport_nodes.at(3630));
-    std::cout << test.size() << " " << test.at(0).get_id() << std::endl;
-    std::cout << "end" << std::endl;
-    return 0;
-    */
+
 }
