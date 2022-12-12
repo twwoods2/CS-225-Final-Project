@@ -35,8 +35,9 @@ Steps For Running Code:
 2. Clone the repository by downloading it manually and placing it in container or by cloning the repository into the workable container.
 
 3. Once in container, change the directory using
-'''
+```
 cd
-'''
+```
+
 
 
