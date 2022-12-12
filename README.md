@@ -1,9 +1,6 @@
 # CS-225-Final-Project
 ------------------------------------------------------------------------------------
-Taigue Woods 
-Dylan Huey
-Ankit Saxena
-Jay Wagh
+Taigue Woods, Dylan Huey, Ankit Saxena, Jay Wagh
 -------------------------------------------------------------------------------------
 Github Organization
 -------------------------------------------------------------------------------------
@@ -34,10 +31,42 @@ Steps For Running Code:
 
 2. Clone the repository by downloading it manually and placing it in container or by cloning the repository into the workable container.
 
-3. Once in container, change the directory using
-```
+3. Once in container with DockerFile, change the directory using
+```c++
 cd
 ```
+
+4. Once in base directory, use 
+```c++
+mkdir build
+cd build
+```
+
+5. For making the MakeFile, we chose to use Cmake, so execute the line 
+
+```c++
+cmake .. 
+```
+
+6. The Cmake files will create a directory to compile and execute containers that are 
+found as entries, so using 
+```c++ 
+make 
+``` 
+will allow you to compile the code
+
+7a. From here, you will be able to input your starting point and destination by using 
+```c++
+./main
+``` 
+Running the main container will prompt you for your starting point and destination.
+
+7b. In order to run our provided test cases, you can execute 
+```c++
+./test
+```
+This will allow you to see observe and see that our test cases function accordingly.
+
 
 
 
