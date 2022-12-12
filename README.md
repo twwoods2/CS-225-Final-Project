@@ -57,7 +57,7 @@ found as entries, so using
 make 
 ``` 
 
-7a From here, you will be able to input your starting point and destination by using 
+7a. From here, you will be able to input your starting point and destination by using 
 ```c++
 ./main
 ``` 
