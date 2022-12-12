@@ -53,4 +53,28 @@ int main() {
     cout << "building graph please wait ..." << endl;
     FlightGraph graph = FlightGraph(airport_nodes, routes);
 
+    // USER INPUT CODE //
+
+
+    // DIJKSTRA CODE //
+    int input1 = 0;
+    int input2 = 0;
+    pair<vector<int>,double> test_djk = graph.Dijkstra(input1, input2);
+     vector<int> path = test_djk.first;
+     double distance = test_djk.second;
+
+    cout << "Route from " << GetNodeInt(input1).get_id() << " -> " <<  GetNodeInt(input2).get_id << endl;
+
+    for (size_t i = 0; i < path.size(); i++) {
+        if (i == 0) {
+            cout << "Starting Aiport: -> ";
+        }
+        cout << path.at(i) << " -> ";
+
+        if (i == path.size() - 1) {
+            cout << " Destination Reached!" << endl;
+            cout << "Flight Distance: " << distance << " km" <<  endl;
+        }
+    }
+
 }
