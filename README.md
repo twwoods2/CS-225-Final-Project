@@ -53,6 +53,7 @@ found as entries, so using
 ```c++ 
 make 
 ``` 
+will allow you to compile the code
 
 7a. From here, you will be able to input your starting point and destination by using 
 ```c++
