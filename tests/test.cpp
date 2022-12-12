@@ -14,7 +14,7 @@ using namespace std;
 
 TEST_CASE("bfs Algorithm (1)", "[weight=5]"){
     vector<Airport> airport_nodes;
-    ifstream ifs{"/workspaces/cs225env/CS-225-Final-Project/data/condensed_airport.csv"};
+    ifstream ifs{"../data/condensed_airport.csv"};
     for (string line; getline(ifs, line); line = "") {
         
         string row = line;
@@ -25,7 +25,7 @@ TEST_CASE("bfs Algorithm (1)", "[weight=5]"){
 
 
     vector<Edge> routes;
-    ifstream ifs_two{"/workspaces/cs225env/CS-225-Final-Project/data/routes.csv"};
+    ifstream ifs_two{"../data/routes.csv"};
     
     for (string line; getline(ifs_two, line); line = "") {
         string row = line; 
@@ -76,7 +76,7 @@ TEST_CASE("bfs Algorithm (1)", "[weight=5]"){
 
 TEST_CASE("bfs Algorithm (2)", "[weight=5]"){
     vector<Airport> airport_nodes;
-    ifstream ifs{"/workspaces/cs225env/CS-225-Final-Project/data/condensed_airport.csv"};
+    ifstream ifs{"../data/condensed_airport.csv"};
     for (string line; getline(ifs, line); line = "") {
         
         string row = line;
@@ -87,7 +87,7 @@ TEST_CASE("bfs Algorithm (2)", "[weight=5]"){
 
 
     vector<Edge> routes;
-    ifstream ifs_two{"/workspaces/cs225env/CS-225-Final-Project/data/routes.csv"};
+    ifstream ifs_two{"../data/routes.csv"};
     
     for (string line; getline(ifs_two, line); line = "") {
         string row = line; 
@@ -134,7 +134,7 @@ TEST_CASE("bfs Algorithm (2)", "[weight=5]"){
 
 TEST_CASE("bfs Algorithm (3)", "[weight=5]"){
     vector<Airport> airport_nodes;
-    ifstream ifs{"/workspaces/cs225env/CS-225-Final-Project/data/condensed_airport.csv"};
+    ifstream ifs{"../data/condensed_airport.csv"};
     for (string line; getline(ifs, line); line = "") {
         
         string row = line;
@@ -145,7 +145,7 @@ TEST_CASE("bfs Algorithm (3)", "[weight=5]"){
 
 
     vector<Edge> routes;
-    ifstream ifs_two{"/workspaces/cs225env/CS-225-Final-Project/data/routes.csv"};
+    ifstream ifs_two{"../data/routes.csv"};
     
     for (string line; getline(ifs_two, line); line = "") {
         string row = line; 
@@ -191,7 +191,7 @@ TEST_CASE("bfs Algorithm (3)", "[weight=5]"){
 
 TEST_CASE("bfs Algorithm (World Cup(1))", "[weight=5]"){
     vector<Airport> airport_nodes;
-    ifstream ifs{"/workspaces/cs225env/CS-225-Final-Project/data/condensed_airport.csv"};
+    ifstream ifs{"../data/condensed_airport.csv"};
     for (string line; getline(ifs, line); line = "") {
         
         string row = line;
@@ -202,7 +202,7 @@ TEST_CASE("bfs Algorithm (World Cup(1))", "[weight=5]"){
 
 
     vector<Edge> routes;
-    ifstream ifs_two{"/workspaces/cs225env/CS-225-Final-Project/data/routes.csv"};
+    ifstream ifs_two{"../data/routes.csv"};
     
     for (string line; getline(ifs_two, line); line = "") {
         string row = line; 
@@ -288,121 +288,21 @@ TEST_CASE("bfs Algorithm (World Cup(1))", "[weight=5]"){
 
 
 
-
-    //vector<int> answer = {3469,3830,4049};
-    //REQUIRE (test_bfs == answer);
-}
-
-TEST_CASE("bfs Algorithm (World Cup(2))", "[weight=5]"){
-    vector<Airport> airport_nodes;
-    ifstream ifs{"/workspaces/cs225env/CS-225-Final-Project/data/condensed_airport.csv"};
-    for (string line; getline(ifs, line); line = "") {
-        
-        string row = line;
-        vector<string> sections = GetSubstrs(line, ',');
-        Airport to_add = Airport(stod(sections.at(6)), stod(sections.at(7)), sections.at(1), sections.at(4), stod(sections.at(0))); //stod converts string to double
-        airport_nodes.push_back(to_add);
-    }
-
-
-    vector<Edge> routes;
-    ifstream ifs_two{"/workspaces/cs225env/CS-225-Final-Project/data/routes.csv"};
-    
-    for (string line; getline(ifs_two, line); line = "") {
-        string row = line; 
-        
-        vector<string> sections = GetSubstrs(row, ',');
-        if (sections.at(3) != "\\N" && sections.at(5) != "\\N" && sections.at(5) != "") {
-            Edge to_add(sections.at(2), sections.at(4), stoi(sections.at(3)), stoi(sections.at(5)));
-            //checking the route exists in data
-            bool start = false;
-            bool end = false;
-            for (size_t i = 0; i < airport_nodes.size(); i++) {
-                if (airport_nodes.at(i).get_id() == sections.at(2)) {
-                start = true;
-                } else if (airport_nodes.at(i).get_id() == sections.at(4)) {
-                end = true;
-            }
-            }
-            if (start && end) {
-                routes.push_back(to_add);
-            }
-         }
-        }
-    
-    FlightGraph graph = FlightGraph(airport_nodes, routes);
-
-
-    vector<int> sfo_doha = graph.bfs(3469, 11051);
-    
-    cout << "Route from SFO -> Doha" << endl;
-
-    for (size_t i = 0; i < sfo_doha.size(); i++) {
-        if (i == 0) {
-            cout << "Starting Aiport: -> ";
-        }
-        cout << sfo_doha.at(i) << " -> ";
-
-        if (i == sfo_doha.size() - 1) {
-            cout << " Destination Reached!" << endl;
-        }
-    }
-
-    vector<int> lax_doha = graph.bfs(3484, 11051);
-
-    cout << "Route from LAX -> Doha" << endl;
-
-    for (size_t i = 0; i < lax_doha.size(); i++) {
-        if (i == 0) {
-            cout << "Starting Aiport: -> ";
-        }
-        cout << lax_doha.at(i) << " -> ";
-
-        if (i == lax_doha.size() - 1) {
-            cout << " Destination Reached!" << endl;
-        }
-    }
-    vector<int> itm_doha = graph.bfs(2334, 11051);
-    cout << "Route from Osaka -> Doha" << endl;
-
-    for (size_t i = 0; i < itm_doha.size(); i++) {
-        if (i == 0) {
-            cout << "Starting Aiport: -> ";
-        }
-        cout << itm_doha.at(i) << " -> ";
-
-        if (i == itm_doha.size() - 1) {
-            cout << " Destination Reached!" << endl;
-        }
-    }
-    vector<int> lis_doha = graph.bfs(1638, 11051);
-
-    cout << "Route from Portugal -> Doha" << endl;
-
-    for (size_t i = 0; i < lis_doha.size(); i++) {
-        if (i == 0) {
-            cout << "Starting Aiport: -> ";
-        }
-        cout << lis_doha.at(i) << " -> ";
-
-        if (i == lis_doha.size() - 1) {
-            cout << " Destination Reached!" << endl;
-        }
-    }
 
     vector<int> answer1 = {3469,3077,11051};
     vector<int> answer2 = {3484,3077,11051};
-    vector<int> answer3 = {2334,2279,11051};
-    vector<int> answer4 = {1638,507,11051};
+    vector<int> answer3 = {};
+    vector<int> answer4 = {1638,478,11051};
     REQUIRE (sfo_doha == answer1);
     REQUIRE (lax_doha == answer2);
     REQUIRE (itm_doha == answer3);
     REQUIRE (lis_doha == answer4);
+    
 }
 
-TEST_CASE("Dijkstra (1)", "[weight=5]") {
+TEST_CASE("bfs Algorithm (World Cup(2))", "[weight=5]"){
     vector<Airport> airport_nodes;
-    ifstream ifs{"/workspaces/cs225env/CS-225-Final-Project/data/condensed_airport.csv"};
+    ifstream ifs{"../data/condensed_airport.csv"};
     for (string line; getline(ifs, line); line = "") {
         
         string row = line;
@@ -413,7 +313,107 @@ TEST_CASE("Dijkstra (1)", "[weight=5]") {
 
 
     vector<Edge> routes;
-    ifstream ifs_two{"/workspaces/cs225env/CS-225-Final-Project/data/routes.csv"};
+    ifstream ifs_two{"../data/routes.csv"};
+    
+    for (string line; getline(ifs_two, line); line = "") {
+        string row = line; 
+        
+        vector<string> sections = GetSubstrs(row, ',');
+        if (sections.at(3) != "\\N" && sections.at(5) != "\\N" && sections.at(5) != "") {
+            Edge to_add(sections.at(2), sections.at(4), stoi(sections.at(3)), stoi(sections.at(5)));
+            //checking the route exists in data
+            bool start = false;
+            bool end = false;
+            for (size_t i = 0; i < airport_nodes.size(); i++) {
+                if (airport_nodes.at(i).get_id() == sections.at(2)) {
+                start = true;
+                } else if (airport_nodes.at(i).get_id() == sections.at(4)) {
+                end = true;
+            }
+            }
+            if (start && end) {
+                routes.push_back(to_add);
+            }
+         }
+        }
+    
+    FlightGraph graph = FlightGraph(airport_nodes, routes);
+
+
+    vector<int> sfo_doha = graph.bfs(3469, 11051);
+    
+    cout << "Route from SFO -> Doha" << endl;
+
+    for (size_t i = 0; i < sfo_doha.size(); i++) {
+        if (i == 0) {
+            cout << "Starting Aiport: -> ";
+        }
+        cout << sfo_doha.at(i) << " -> ";
+
+        if (i == sfo_doha.size() - 1) {
+            cout << " Destination Reached!" << endl;
+        }
+    }
+
+    vector<int> lax_doha = graph.bfs(3484, 11051);
+
+    cout << "Route from LAX -> Doha" << endl;
+
+    for (size_t i = 0; i < lax_doha.size(); i++) {
+        if (i == 0) {
+            cout << "Starting Aiport: -> ";
+        }
+        cout << lax_doha.at(i) << " -> ";
+
+        if (i == lax_doha.size() - 1) {
+            cout << " Destination Reached!" << endl;
+        }
+    }
+    vector<int> itm_doha = graph.bfs(2334, 11051);
+    cout << "Route from Osaka -> Doha" << endl;
+
+    for (size_t i = 0; i < itm_doha.size(); i++) {
+        if (i == 0) {
+            cout << "Starting Aiport: -> ";
+        }
+        cout << itm_doha.at(i) << " -> ";
+
+        if (i == itm_doha.size() - 1) {
+            cout << " Destination Reached!" << endl;
+        }
+    }
+    vector<int> lis_doha = graph.bfs(1638, 11051);
+
+    cout << "Route from Portugal -> Doha" << endl;
+
+    for (size_t i = 0; i < lis_doha.size(); i++) {
+        if (i == 0) {
+            cout << "Starting Aiport: -> ";
+        }
+        cout << lis_doha.at(i) << " -> ";
+
+        if (i == lis_doha.size() - 1) {
+            cout << " Destination Reached!" << endl;
+        }
+    }
+
+    // takes a very long time to run and producing a test case later
+}
+
+TEST_CASE("Dijkstra (1)", "[weight=5]") {
+    vector<Airport> airport_nodes;
+    ifstream ifs{"../data/condensed_airport.csv"};
+    for (string line; getline(ifs, line); line = "") {
+        
+        string row = line;
+        vector<string> sections = GetSubstrs(line, ',');
+        Airport to_add = Airport(stod(sections.at(6)), stod(sections.at(7)), sections.at(1), sections.at(4), stod(sections.at(0))); //stod converts string to double
+        airport_nodes.push_back(to_add);
+    }
+
+
+    vector<Edge> routes;
+    ifstream ifs_two{"../data/routes.csv"};
     
     for (string line; getline(ifs_two, line); line = "") {
         string row = line; 
@@ -474,12 +474,13 @@ TEST_CASE("Dijkstra (1)", "[weight=5]") {
 
         if (i == path.size() - 1) {
             cout << " Destination Reached!" << endl;
-            cout << "Flight Distance: " << distance << endl;
+            cout << "Flight Distance: " << distance << " km" <<  endl;
         }
     }
 
-    //vector<int> answer = {3469, 3830};
-    //REQUIRE (test_djk == answer);
+    vector<int> answer = {3077, 3830, 4049};
+    REQUIRE( path == answer);
+    
 }
 
 TEST_CASE("Dijkstra (2)", "[weight=5]") {
@@ -537,15 +538,13 @@ TEST_CASE("Dijkstra (2)", "[weight=5]") {
 
         if (i == path.size() - 1) {
             cout << " Destination Reached!" << endl;
-            cout << "Flight Distance: " << distance << endl;
+            cout << "Flight Distance: " << distance << " km" <<  endl;
         }
     }
 
-    //vector<int> answer = {3469, 3830};
-    //REQUIRE (test_djk == answer);
+    vector<int> answer = {3469, 3830};
+    REQUIRE (path == answer);
 }
-
-
 
 TEST_CASE("BFS / Dijkstra (1)", "[weight=5]") {
     vector<Airport> airport_nodes;
@@ -623,28 +622,15 @@ TEST_CASE("BFS / Dijkstra (1)", "[weight=5]") {
 
         if (i == path.size() - 1) {
             cout << " Destination Reached!" << endl;
-            cout << "Flight Distance: " << distance << endl;
-        }
-    }
-    cout << "Route from SFO -> ORD (Dijkstra)" << endl;
-     pair<vector<int>,double> test_djk1 = graph.Dijkstra(3469, 3830);
-     vector<int> path1 = test_djk1.first;
-     double distance1 = test_djk1.second;
-
-    for (size_t i = 0; i < path1.size(); i++) {
-        if (i == 0) {
-            cout << "Starting Aiport: -> ";
-        }
-        cout << path1.at(i) << " -> ";
-
-        if (i == path1.size() - 1) {
-            cout << " Destination Reached!" << endl;
-            cout << "Flight Distance: " << distance1 << endl;
+            cout << "Flight Distance: " << distance << " km" <<  endl;
         }
     }
 
-    //vector<int> answer = {3469, 3830};
-    //REQUIRE (test_djk == answer);
+    vector<int> answer1 = {4049,3830,478,1157,1154};
+    vector<int> answer2 = {4049,3830,478,1157,1154};
+    
+    REQUIRE (path == answer1);
+    REQUIRE (test_bfs == answer2);
 }
 
 TEST_CASE("BFS / Dijkstra (2)", "[weight=5]") {
@@ -745,16 +731,6 @@ TEST_CASE("BFS / Dijkstra (2)", "[weight=5]") {
             cout << " Destination Reached!" << endl;
         }
     }
-    /*
-    vector<int> answer1 = {3469,3077,11051};
-    vector<int> answer2 = {3484,2564,11051};
-    vector<int> answer3 = {2334,2279,11051};
-    vector<int> answer4 = {1638,507,11051};
-    REQUIRE (sfo_doha == answer1);
-    REQUIRE (lax_doha == answer2);
-    REQUIRE (itm_doha == answer3);
-    REQUIRE (lis_doha == answer4);
-    */
 
     // DJIKSTRA // 
     cout << "Route from SFO -> ORD (Dijkstra)" << endl;
@@ -770,7 +746,7 @@ TEST_CASE("BFS / Dijkstra (2)", "[weight=5]") {
 
         if (i == path1.size() - 1) {
             cout << " Destination Reached!" << endl;
-            cout << "Flight Distance: " << distance1 << endl;
+            cout << "Flight Distance: " << distance1 << " km" <<  endl;
         }
     }
      
@@ -787,7 +763,7 @@ TEST_CASE("BFS / Dijkstra (2)", "[weight=5]") {
 
         if (i == path2.size() - 1) {
             cout << " Destination Reached!" << endl;
-            cout << "Flight Distance: " << distance2 << endl;
+            cout << "Flight Distance: " << distance2 << " km" <<  endl;
         }
     }
 
@@ -804,7 +780,7 @@ TEST_CASE("BFS / Dijkstra (2)", "[weight=5]") {
 
         if (i == path3.size() - 1) {
             cout << " Destination Reached!" << endl;
-            cout << "Flight Distance: " << distance3 << endl;
+            cout << "Flight Distance: " << distance3 << " km" <<  endl;
         }
     }
 
@@ -821,12 +797,19 @@ TEST_CASE("BFS / Dijkstra (2)", "[weight=5]") {
 
         if (i == path4.size() - 1) {
             cout << " Destination Reached!" << endl;
-            cout << "Flight Distance: " << distance4 << endl;
+            cout << "Flight Distance: " << distance4 << " km" <<  endl;
         }
     }
      
 
-
-    //vector<int> answer = {3469, 3830};
-    //REQUIRE (test_djk == answer);
+    /*
+    vector<int> answer1 = {3469,3077,11051};
+    vector<int> answer2 = {3484,2564,11051};
+    vector<int> answer3 = {2334,2279,11051};
+    vector<int> answer4 = {1638,507,11051};
+    REQUIRE (sfo_doha == answer1);
+    REQUIRE (lax_doha == answer2);
+    REQUIRE (itm_doha == answer3);
+    REQUIRE (lis_doha == answer4);
+    */
 }
