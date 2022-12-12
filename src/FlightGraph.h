@@ -17,6 +17,8 @@
 #include <iterator>
 #include <unordered_map>
 #include <bits/stdc++.h>
+#include "Image.h"
+#include "StickerSheet.h"
 using namespace std;
 
 
@@ -49,6 +51,10 @@ class FlightGraph {
     vector<int> constrcutpath(int start, int end, vector<int> path);
     vector<int> bfs(int start, int end);
 
+    vector<Airport> GetVectorAirport(vector<int> shortPath);
+
+    void pathVisualizer(cs225::PNG worldMap, vector<Airport> path);
+    double getSlope(double x, double y, double y_int);
 
     private:
     vector<Airport> airports_;
@@ -80,6 +86,7 @@ class FlightGraph {
         
 
     }
+
     class Compare {
         public:
         bool operator()(pair<int, double> p1, pair<int, double> p2) {

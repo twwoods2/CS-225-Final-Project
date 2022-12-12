@@ -292,3 +292,111 @@ vector<int> FlightGraph::bfs(int start, int end) {
     return constrcutpath(start, end, path);
 
 }
+
+vector<Airport> FlightGraph::GetVectorAirport(vector<int> shortPath) {
+    vector<Airport> toreturn;
+    if (shortPath.empty()) { return toreturn; }
+
+    for (size_t i = 0; i < shortPath.size(); i++) {
+        Airport tmp = GetNodeInt(shortPath.at(i));
+        toreturn.push_back(tmp);
+    }  
+
+    return toreturn;
+}
+
+void FlightGraph::pathVisualizer(cs225::PNG worldMap, vector<Airport> path) {
+    worldMap.resize(worldMap.width(), worldMap.height());
+    vector<pair<double, double>> airport_x_y;
+    for(unsigned i = 0; i < path.size(); i++){
+                // double x = (airports.at(i).second+180)(worldMap.width()/360)
+            double lat = path[i].get_lat_long().first;
+            double latRad = toRadians(lat);
+            if (tan((3.14 / 4) + (latRad / 2)) < 0)
+            {
+                continue;
+            }
+            double mercVal = log(tan((3.14/4)+(latRad/2))) * (worldMap.width()/(2*3.14));
+            double longRad = toRadians(path[i].get_lat_long().second + 180);
+            double x = longRad * (worldMap.width()/(2*3.14));
+            double y = worldMap.height()/2 - mercVal;
+
+            for (int xd = -2; xd < 3; xd++) {
+                for (int yd = -2; yd < 3; yd++) {
+                    cs225::HSLAPixel& pix = worldMap.getPixel(xd + x , yd + y);
+                    pix = cs225::HSLAPixel(0,1.0,0.5,1);
+                }
+            }
+            airport_x_y.push_back(pair<double, double>(x, y));
+
+    }
+    for (size_t  i = 0; i < airport_x_y.size() - 1; i++) {
+        double start_x = airport_x_y.at(i).first;
+        double start_y = airport_x_y.at(i).second;
+        double end_x = airport_x_y.at(i + 1).first;
+        double end_y = airport_x_y.at(i + 1).second;
+
+        if(start_x > end_x) iter_swap(airport_x_y.begin() + i, airport_x_y.begin() + (i+1));
+    }
+    for (size_t  i = 0; i < airport_x_y.size() - 1; i++) {
+
+        double start_x = airport_x_y.at(i).first;
+        double start_y = airport_x_y.at(i).second;
+        double end_x = airport_x_y.at(i + 1).first;
+        double end_y = airport_x_y.at(i + 1).second;
+
+        double a = ((double)end_y - (double)start_y) / ((double)end_x - (double)start_x);
+        double b = (double)start_y - (a * (double)start_x);
+
+        double curr_x = start_x;
+        double curr_y = start_y;
+
+        while (curr_x <= end_x) {
+                worldMap.getPixel(curr_x, curr_y) = cs225::HSLAPixel(180, 1, 0.5, 1);
+
+                if (a <= 0) { // moving upright
+                    if (curr_y < end_y) {break;}
+                    double rightSlope = getSlope(curr_x + 1, curr_y, b);
+                    double upSlope = getSlope(curr_x, curr_y - 1, b);
+                    if (abs(abs(rightSlope) - abs(a)) < abs(abs(upSlope) - abs(a))) {
+                        curr_x++;
+                        continue;
+                    } //moving right
+                    else if (abs(abs(rightSlope) - abs(a)) > abs(abs(upSlope) - abs(a))) {
+                        curr_y--;
+                        continue;
+                    } //moving up
+                    else {
+                        curr_x++;
+                        curr_y--;
+                        continue;
+                    }
+                } 
+                else { // moving downright
+                    if (curr_y > end_y) {break;}
+                    double rightSlope = getSlope(curr_x + 1, curr_y, b);
+                    double downSlope = getSlope(curr_x, curr_y + 1, b);
+                    if (abs(abs(rightSlope) - abs(a)) < abs(abs(downSlope) - abs(a))) {
+                        curr_x++;
+                        continue;
+                    } //moving right
+                    else if (abs(abs(rightSlope) - abs(a)) > abs(abs(downSlope) - abs(a))) {
+                        curr_y++;
+                        continue;
+                    } //moving down
+                    else {
+                        curr_x++;
+                        curr_y++;
+                        continue;
+                    }
+                } 
+            }
+        }
+
+    cs225::PNG output = worldMap;
+    output.writeToFile("../tests/newImage.png"); 
+}
+
+double FlightGraph::getSlope(double x, double y, double y_int) {
+    return ((y - y_int) / x);
+}

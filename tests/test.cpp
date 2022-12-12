@@ -813,3 +813,177 @@ TEST_CASE("BFS / Dijkstra (2)", "[weight=5]") {
     REQUIRE (lis_doha == answer4);
     */
 }
+
+TEST_CASE("picture (1)", "[weight=5]") {
+
+    vector<Airport> airport_nodes;
+    ifstream ifs{"../data/condensed_airport.csv"};
+    for (string line; getline(ifs, line); line = "") {
+        
+        string row = line;
+        vector<string> sections = GetSubstrs(line, ',');
+        Airport to_add = Airport(stod(sections.at(6)), stod(sections.at(7)), sections.at(1), sections.at(4), stod(sections.at(0))); //stod converts string to double
+        airport_nodes.push_back(to_add);
+    }
+
+
+    vector<Edge> routes;
+    ifstream ifs_two{"../data/routes.csv"};
+    
+    for (string line; getline(ifs_two, line); line = "") {
+        string row = line; 
+        
+        vector<string> sections = GetSubstrs(row, ',');
+        if (sections.at(3) != "\\N" && sections.at(5) != "\\N" && sections.at(5) != "") {
+            Edge to_add(sections.at(2), sections.at(4), stoi(sections.at(3)), stoi(sections.at(5)));
+            //checking the route exists in data
+            bool start = false;
+            bool end = false;
+            for (size_t i = 0; i < airport_nodes.size(); i++) {
+                if (airport_nodes.at(i).get_id() == sections.at(2)) {
+                start = true;
+                } else if (airport_nodes.at(i).get_id() == sections.at(4)) {
+                end = true;
+            }
+            }
+            if (start && end) {
+                routes.push_back(to_add);
+            }
+         }
+        }
+
+    FlightGraph graph = FlightGraph(airport_nodes, routes); 
+
+
+    cs225::PNG worldMap;
+    
+    // DJIKSTRAS CODE //
+    pair<vector<int>,double> test_djk = graph.Dijkstra(487, 4049);
+     vector<int> shortest_path = test_djk.first;
+     double distance = test_djk.second;
+
+    cout << " vector size: " << shortest_path.size() <<endl;
+
+
+
+    worldMap.readFromFile("../tests/myImage.png");
+    cout << worldMap.width() << worldMap.height() << endl;
+    graph.pathVisualizer(worldMap, graph.GetVectorAirport(shortest_path));
+
+}
+
+TEST_CASE("picture (2)", "[weight=5]") {
+
+    vector<Airport> airport_nodes;
+    ifstream ifs{"../data/condensed_airport.csv"};
+    for (string line; getline(ifs, line); line = "") {
+        
+        string row = line;
+        vector<string> sections = GetSubstrs(line, ',');
+        Airport to_add = Airport(stod(sections.at(6)), stod(sections.at(7)), sections.at(1), sections.at(4), stod(sections.at(0))); //stod converts string to double
+        airport_nodes.push_back(to_add);
+    }
+
+
+    vector<Edge> routes;
+    ifstream ifs_two{"../data/routes.csv"};
+    
+    for (string line; getline(ifs_two, line); line = "") {
+        string row = line; 
+        
+        vector<string> sections = GetSubstrs(row, ',');
+        if (sections.at(3) != "\\N" && sections.at(5) != "\\N" && sections.at(5) != "") {
+            Edge to_add(sections.at(2), sections.at(4), stoi(sections.at(3)), stoi(sections.at(5)));
+            //checking the route exists in data
+            bool start = false;
+            bool end = false;
+            for (size_t i = 0; i < airport_nodes.size(); i++) {
+                if (airport_nodes.at(i).get_id() == sections.at(2)) {
+                start = true;
+                } else if (airport_nodes.at(i).get_id() == sections.at(4)) {
+                end = true;
+            }
+            }
+            if (start && end) {
+                routes.push_back(to_add);
+            }
+         }
+        }
+
+    FlightGraph graph = FlightGraph(airport_nodes, routes); 
+
+
+    cs225::PNG worldMap;
+    
+    // DJIKSTRAS CODE //
+    pair<vector<int>,double> test_djk = graph.Dijkstra(3484, 11051);
+     vector<int> shortest_path = test_djk.first;
+     double distance = test_djk.second;
+
+    cout << " vector size: " << shortest_path.size() <<endl;
+
+
+
+    worldMap.readFromFile("../tests/myImage.png");
+    cout << worldMap.width() << worldMap.height() << endl;
+    graph.pathVisualizer(worldMap, graph.GetVectorAirport(shortest_path));
+
+}
+
+TEST_CASE("picture (3)", "[weight=5]") {
+
+    vector<Airport> airport_nodes;
+    ifstream ifs{"../entry/airports.csv"};
+    for (string line; getline(ifs, line); line = "") {
+        
+        string row = line;
+        vector<string> sections = GetSubstrs(line, ',');
+        Airport to_add = Airport(stod(sections.at(6)), stod(sections.at(7)), sections.at(1), sections.at(4), stod(sections.at(0))); //stod converts string to double
+        airport_nodes.push_back(to_add);
+    }
+
+
+    vector<Edge> routes;
+    ifstream ifs_two{"../data/routes.csv"};
+    
+    for (string line; getline(ifs_two, line); line = "") {
+        string row = line; 
+        
+        vector<string> sections = GetSubstrs(row, ',');
+        if (sections.at(3) != "\\N" && sections.at(5) != "\\N" && sections.at(5) != "") {
+            Edge to_add(sections.at(2), sections.at(4), stoi(sections.at(3)), stoi(sections.at(5)));
+            //checking the route exists in data
+            bool start = false;
+            bool end = false;
+            for (size_t i = 0; i < airport_nodes.size(); i++) {
+                if (airport_nodes.at(i).get_id() == sections.at(2)) {
+                start = true;
+                } else if (airport_nodes.at(i).get_id() == sections.at(4)) {
+                end = true;
+                }
+            }
+            if (start && end) {
+                routes.push_back(to_add);
+            }
+         }
+        }
+
+    FlightGraph graph = FlightGraph(airport_nodes, routes); 
+
+
+    cs225::PNG worldMap;
+    
+    // DJIKSTRAS CODE //
+    pair<vector<int>,double> test_djk = graph.Dijkstra(893, 486);
+     vector<int> shortest_path = test_djk.first;
+     double distance = test_djk.second;
+
+    cout << " vector size: " << shortest_path.size() <<endl;
+
+
+
+    worldMap.readFromFile("../tests/myImage.png");
+    cout << worldMap.width() << worldMap.height() << endl;
+    graph.pathVisualizer(worldMap, graph.GetVectorAirport(shortest_path));
+
+}
