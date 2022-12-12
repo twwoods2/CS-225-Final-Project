@@ -635,7 +635,7 @@ TEST_CASE("BFS / Dijkstra (1)", "[weight=5]") {
 
 TEST_CASE("BFS / Dijkstra (2)", "[weight=5]") {
     vector<Airport> airport_nodes;
-    ifstream ifs{"../entry/airports.csv"};
+    ifstream ifs{"../data/airports.csv"};
     for (string line; getline(ifs, line); line = "") {
         
         string row = line;

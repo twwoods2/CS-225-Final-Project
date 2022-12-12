@@ -263,7 +263,7 @@ vector<int> FlightGraph::solve(int start) {
 
     return path;
 }
-vector<int> FlightGraph::constrcutpath(int start, int end, vector<int> path) {
+vector<int> FlightGraph::constructpath(int start, int end, vector<int> path) {
     vector<int> toreturn;
     vector<int> empty;
 
@@ -289,7 +289,7 @@ vector<int> FlightGraph::bfs(int start, int end) {
 
     vector<int> path = solve(start);
 
-    return constrcutpath(start, end, path);
+    return constructpath(start, end, path);
 
 }
 

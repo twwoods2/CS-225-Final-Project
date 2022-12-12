@@ -17,8 +17,6 @@
 #include <iterator>
 #include <unordered_map>
 #include <bits/stdc++.h>
-#include "Image.h"
-#include "StickerSheet.h"
 using namespace std;
 
 
@@ -48,7 +46,7 @@ class FlightGraph {
     vector<Edge> GetEdges() {return routes_;}
 
     vector<int> solve(int start);
-    vector<int> constrcutpath(int start, int end, vector<int> path);
+    vector<int> constructpath(int start, int end, vector<int> path);
     vector<int> bfs(int start, int end);
 
     vector<Airport> GetVectorAirport(vector<int> shortPath);
