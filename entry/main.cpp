@@ -56,7 +56,7 @@ int main() {
     cout << "\n" << endl;
 
     string start, end;
-    cout << "inserting"; cin >> start >> end;
+    cout << "inserting "; cin >> start >> end;
     cout << "\n" << endl;
     cout << "Finding airports, please wait..." << endl; 
     cout << "\n" << endl;

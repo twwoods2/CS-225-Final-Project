@@ -70,20 +70,7 @@ FlightGraph::FlightGraph(vector<Airport> airport_nodes, vector<Edge> edge_nodes)
 // ADJACENCY LIST // 
 
 vector<Airport> FlightGraph::GetNeighbors(Airport airport) {
-    vector<Airport> search;
-    for (size_t i = 0; i < routes_.size(); i++) {
-
-        if (airport.get_id() == routes_.at(i).getStart()) {
-            string neighbor_id = routes_.at(i).getEnd();
-            for (size_t j = 0; j < airports_.size(); j++) {
-                
-                if (neighbor_id == airports_.at(j).get_id()) {
-                    search.push_back(airports_.at(j));
-                }
-            }
-        }
-    }
-    return search;
+    return neighbors_[airport.get_sourceid()];
 }
 
 vector<Edge> FlightGraph::GetNeighborsEdge(string id) { 
