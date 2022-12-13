@@ -305,7 +305,7 @@ vector<Airport> FlightGraph::GetVectorAirport(vector<int> shortPath) {
     return toreturn;
 }
 
-void FlightGraph::pathVisualizer(cs225::PNG worldMap, vector<Airport> path) {
+void FlightGraph::pathVisualizer(cs225::PNG worldMap, vector<Airport> path, string filename) {
     worldMap.resize(worldMap.width(), worldMap.height());
     vector<pair<double, double>> airport_x_y;
     for(unsigned i = 0; i < path.size(); i++){
@@ -394,7 +394,7 @@ void FlightGraph::pathVisualizer(cs225::PNG worldMap, vector<Airport> path) {
         }
 
     cs225::PNG output = worldMap;
-    output.writeToFile("../tests/newImage.png"); 
+    output.writeToFile(filename); 
 }
 
 double FlightGraph::getSlope(double x, double y, double y_int) {

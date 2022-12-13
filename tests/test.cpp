@@ -800,18 +800,6 @@ TEST_CASE("BFS / Dijkstra (2)", "[weight=5]") {
             cout << "Flight Distance: " << distance4 << " km" <<  endl;
         }
     }
-     
-
-    /*
-    vector<int> answer1 = {3469,3077,11051};
-    vector<int> answer2 = {3484,2564,11051};
-    vector<int> answer3 = {2334,2279,11051};
-    vector<int> answer4 = {1638,507,11051};
-    REQUIRE (sfo_doha == answer1);
-    REQUIRE (lax_doha == answer2);
-    REQUIRE (itm_doha == answer3);
-    REQUIRE (lis_doha == answer4);
-    */
 }
 
 TEST_CASE("picture (1)", "[weight=5]") {
@@ -862,13 +850,11 @@ TEST_CASE("picture (1)", "[weight=5]") {
      vector<int> shortest_path = test_djk.first;
      double distance = test_djk.second;
 
-    cout << " vector size: " << shortest_path.size() <<endl;
 
 
 
-    worldMap.readFromFile("../tests/myImage.png");
-    cout << worldMap.width() << worldMap.height() << endl;
-    graph.pathVisualizer(worldMap, graph.GetVectorAirport(shortest_path));
+    worldMap.readFromFile("../tests/map.png");
+    graph.pathVisualizer(worldMap, graph.GetVectorAirport(shortest_path), "../tests/testoutput.png");
 
 }
 
@@ -920,13 +906,11 @@ TEST_CASE("picture (2)", "[weight=5]") {
      vector<int> shortest_path = test_djk.first;
      double distance = test_djk.second;
 
-    cout << " vector size: " << shortest_path.size() <<endl;
 
 
 
-    worldMap.readFromFile("../tests/myImage.png");
-    cout << worldMap.width() << worldMap.height() << endl;
-    graph.pathVisualizer(worldMap, graph.GetVectorAirport(shortest_path));
+    worldMap.readFromFile("../tests/map.png");
+    graph.pathVisualizer(worldMap, graph.GetVectorAirport(shortest_path), "../tests/testoutput.png");
 
 }
 
@@ -978,12 +962,10 @@ TEST_CASE("picture (3)", "[weight=5]") {
      vector<int> shortest_path = test_djk.first;
      double distance = test_djk.second;
 
-    cout << " vector size: " << shortest_path.size() <<endl;
 
 
 
-    worldMap.readFromFile("../tests/myImage.png");
-    cout << worldMap.width() << worldMap.height() << endl;
-    graph.pathVisualizer(worldMap, graph.GetVectorAirport(shortest_path));
+    worldMap.readFromFile("../tests/map.png");
+    graph.pathVisualizer(worldMap, graph.GetVectorAirport(shortest_path), "../tests/testoutput.png");
 
 }

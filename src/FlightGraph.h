@@ -51,7 +51,7 @@ class FlightGraph {
 
     vector<Airport> GetVectorAirport(vector<int> shortPath);
 
-    void pathVisualizer(cs225::PNG worldMap, vector<Airport> path);
+    void pathVisualizer(cs225::PNG worldMap, vector<Airport> path, string filename);
     double getSlope(double x, double y, double y_int);
 
     private:
